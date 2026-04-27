@@ -1,0 +1,3210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zabaleta — Plano de Ação 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #161920;
+    --surface2: #1e2230;
+    --surface3: #252a3a;
+    --border: #2a3048;
+    --gold: #c9a84c;
+    --gold-light: #e8c76d;
+    --gold-dim: rgba(201,168,76,0.15);
+    --text: #e8eaf0;
+    --text-muted: #7a8099;
+    --text-dim: #4a5068;
+    --green: #4ade80;
+    --green-bg: rgba(74,222,128,0.1);
+    --blue: #60a5fa;
+    --blue-bg: rgba(96,165,250,0.1);
+    --orange: #fb923c;
+    --orange-bg: rgba(251,146,60,0.1);
+    --red: #f87171;
+    --red-bg: rgba(248,113,113,0.1);
+    --purple: #a78bfa;
+    --purple-bg: rgba(167,139,250,0.1);
+    --gray: #94a3b8;
+    --gray-bg: rgba(148,163,184,0.1);
+    --radius: 10px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+
+  .btn {
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--gold); color: #0d0f14; }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  /* ── LAYOUT ── */
+  .app-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    padding-top: 0;
+    transition: width 0.22s ease;
+    overflow: hidden;
+  }
+  .sidebar.collapsed { width: 56px; }
+  .sidebar-logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .sidebar-logo .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .sidebar-logo .logo-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .sidebar.collapsed .sidebar-logo .logo,
+  .sidebar.collapsed .sidebar-logo .logo-date { opacity: 0; }
+  .sidebar-toggle {
+    position: absolute;
+    top: 50%; right: 12px;
+    transform: translateY(-50%);
+    width: 24px; height: 24px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface2);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .sidebar.collapsed .sidebar-toggle { right: 50%; transform: translate(50%, -50%); }
+  .sidebar-toggle:hover { border-color: var(--gold); color: var(--gold); }
+  .sidebar-nav {
+    flex: 1;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .tab {
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    border: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .tab .tab-icon { flex-shrink: 0; font-size: 16px; }
+  .tab .tab-label { transition: opacity 0.15s; }
+  .sidebar.collapsed .tab { padding: 9px; justify-content: center; }
+  .sidebar.collapsed .tab .tab-label { opacity: 0; width: 0; overflow: hidden; }
+  .tab.active { background: var(--gold-dim); color: var(--gold); }
+  .tab:hover:not(.active) { background: var(--surface2); color: var(--text); }
+  .sidebar-footer {
+    padding: 14px 10px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sidebar-footer .btn { width: 100%; justify-content: center; font-size: 12px; padding: 7px 10px; white-space: nowrap; overflow: hidden; }
+  .sidebar-footer .btn-label { transition: opacity 0.15s; }
+  .sidebar.collapsed .sidebar-footer .btn-label { opacity: 0; width: 0; }
+  .sidebar.collapsed .sidebar-footer .btn { padding: 9px; }
+
+  /* ── CONTENT AREA ── */
+  .content-area {
+    margin-left: 200px;
+    flex: 1;
+    min-height: 100vh;
+    transition: margin-left 0.22s ease;
+  }
+  .content-area.collapsed { margin-left: 56px; }
+
+  /* ── MAIN ── */
+  .main { padding: 28px 32px; }
+
+  /* ── STATS BAR (dashboard only) ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .stat-card:hover { border-color: var(--gold); transform: translateY(-1px); }
+  .stat-card.active-filter { border-color: var(--gold); background: var(--gold-dim); }
+  .stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-family: 'DM Serif Display', serif; color: var(--text); }
+  .stat-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  /* ── RESPONSIBLE PILLS ── */
+  .resp-pill-compact {
+    padding: 6px 8px;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    min-width: 90px;
+  }
+  .resp-pill-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 2px; width: 100%;
+  }
+  .resp-pill-setor {
+    font-size: 9px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.5px; line-height: 1; text-align: center;
+  }
+  .resp-pill-name {
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+    color: var(--text); text-align: center;
+  }
+  .resp-pill.active .resp-pill-name { color: var(--gold); }
+  .resp-pill-count {
+    font-size: 10px; font-weight: 700; color: var(--text-dim);
+    text-align: center; line-height: 1;
+  }
+  .resp-pill.active .resp-pill-count { color: var(--gold-light, #d4a84b); opacity: 0.8; }
+
+  #respPills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  #respPills::-webkit-scrollbar { height: 3px; }
+  #respPills::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .resp-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .resp-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px 7px 8px;
+    border-radius: 40px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+    background: var(--surface2);
+    color: var(--text-muted);
+  }
+  .resp-pill:hover { border-color: var(--gold); color: var(--text); }
+  .resp-pill.active { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
+  .resp-pill .pill-avatar {
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .resp-pill .pill-count {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .resp-pill.active .pill-count { background: rgba(201,168,76,0.2); }
+
+  /* ── FILTERS ── */
+  .filters-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .filter-group { display: flex; align-items: center; gap: 8px; }
+  .filter-label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  select, input[type="text"] {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 8px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+    cursor: pointer;
+  }
+  select:focus, input[type="text"]:focus { border-color: var(--gold); }
+  input[type="text"] { width: 260px; }
+  input[type="text"]::placeholder { color: var(--text-dim); }
+  .filter-count {
+    background: var(--gold-dim);
+    color: var(--gold);
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .btn-clear {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-clear:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: var(--surface2);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border);
+    user-select: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  thead th:hover { color: var(--gold); }
+  thead th.sort-asc::after { content: ' ↑'; color: var(--gold); }
+  thead th.sort-desc::after { content: ' ↓'; color: var(--gold); }
+  tbody tr {
+    border-bottom: 1px solid rgba(42,48,72,0.5);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  tbody tr:hover { background: var(--surface2); }
+  tbody tr:last-child { border-bottom: none; }
+  td { padding: 13px 16px; vertical-align: middle; }
+  .td-atividade { max-width: 340px; }
+  .td-atividade-text {
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .td-notes { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-style: italic;
+    display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-blue { background: var(--blue-bg); color: var(--blue); }
+  .badge-orange { background: var(--orange-bg); color: var(--orange); }
+  .badge-red { background: var(--red-bg); color: var(--red); }
+  .badge-purple { background: var(--purple-bg); color: var(--purple); }
+  .badge-gray { background: var(--gray-bg); color: var(--gray); }
+
+  /* ── SETOR TAG ── */
+  .setor-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .resp-cell { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .resp-name { font-size: 13px; font-weight: 500; }
+
+  /* ── MINI PROGRESS ── */
+  .prog-bar { height: 4px; background: var(--surface3); border-radius: 2px; width: 80px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+  .prog-cell { display: flex; align-items: center; gap: 8px; }
+  .prog-pct { font-size: 12px; color: var(--text-muted); min-width: 28px; }
+
+  /* ── IMPORTANCE STAR ── */
+  .imp-cell { text-align: center; font-size: 16px; }
+
+  /* ── DRAG & DROP ── */
+  .drag-handle {
+    cursor: grab;
+    color: var(--text-dim);
+    font-size: 16px;
+    padding: 0 4px;
+    user-select: none;
+    transition: color 0.1s;
+    line-height: 1;
+  }
+  .drag-handle:hover { color: var(--gold); }
+  tr.dragging { opacity: 0.4; background: var(--surface3) !important; }
+  tr.drag-over { box-shadow: 0 -2px 0 var(--gold) inset; background: var(--gold-dim) !important; }
+  thead th.th-handle { width: 28px; cursor: default; }
+  tbody tr { cursor: default; }
+  tbody tr td:not(:first-child) { cursor: pointer; }
+  /* when filters/sort active, disable drag hint */
+  .drag-disabled .drag-handle { opacity: 0.2; cursor: not-allowed; }
+
+  /* ── RESULT COUNT ── */
+  .result-info { font-size: 12px; color: var(--text-dim); padding: 12px 16px; border-top: 1px solid var(--border); background: var(--surface2); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+    animation: slideUp 0.2s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-header {
+    padding: 24px 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; line-height: 1.3; flex: 1; }
+  .modal-close {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.1s;
+  }
+  .modal-close:hover { border-color: var(--red); color: var(--red); }
+  .modal-body { padding: 20px 28px 28px; }
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .modal-field { display: flex; flex-direction: column; gap: 6px; }
+  .modal-field-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .modal-field-value { font-size: 14px; color: var(--text); }
+  .modal-textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .modal-textarea:focus { border-color: var(--gold); }
+  .modal-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .modal-input:focus { border-color: var(--gold); }
+  .modal-select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+    cursor: pointer;
+  }
+  .modal-select:focus { border-color: var(--gold); }
+  .prog-section { margin-top: 20px; }
+  .prog-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .prog-big-bar { height: 12px; background: var(--surface3); border-radius: 6px; overflow: hidden; }
+  .prog-big-fill { height: 100%; border-radius: 6px; transition: width 0.3s; }
+  input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .btn-danger { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 8px 18px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+  .btn-danger:hover { background: var(--red-bg); }
+  .btn-retire { background: transparent; border: 1px solid var(--text-dim); color: var(--text-dim); padding: 8px 18px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+  .btn-retire:hover { border-color: var(--orange); color: var(--orange); }
+  /* Retired row */
+  tr.tr-retired td { opacity: 0.4; }
+  tr.tr-retired .td-atividade-text { text-decoration: line-through; color: var(--text-dim); }
+  .btn-save { background: var(--gold); color: #0d0f14; padding: 8px 24px; border-radius: 8px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; transition: all 0.15s; }
+  .btn-save:hover { background: var(--gold-light); }
+
+  /* ── ADD MODAL ── */
+  .add-modal { max-width: 560px; }
+  .add-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .add-form-full { grid-column: 1 / -1; }
+
+  /* ── DASHBOARD TAB ── */
+  .dash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .person-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .person-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .person-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .person-avatar {
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .person-name { font-family: 'DM Serif Display', serif; font-size: 18px; }
+  .person-count { font-size: 12px; color: var(--text-muted); }
+  .person-overall-prog { margin-bottom: 14px; }
+  .person-overall-bar { height: 8px; background: var(--surface3); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  .person-overall-fill { height: 100%; border-radius: 4px; }
+  .person-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .person-stat { text-align: center; }
+  .person-stat-val { font-size: 18px; font-family: 'DM Serif Display', serif; }
+  .person-stat-lbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── TOASTS ── */
+  .toast {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    background: var(--surface2);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--text);
+    z-index: 999;
+    box-shadow: var(--shadow);
+    animation: toastIn 0.3s ease;
+    max-width: 320px;
+  }
+  @keyframes toastIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .view-toggle { display: flex; gap: 4px; }
+  .view-btn {
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.1s;
+  }
+  .view-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+
+  /* ── EMPTY ── */
+  .empty { padding: 60px; text-align: center; color: var(--text-muted); }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-text { font-size: 15px; }
+
+  /* section title */
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 20px; color: var(--text); }
+  .section-title span { color: var(--gold); }
+
+  /* hide tabs */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .smart-modal { max-width: 760px; }
+  .smart-eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .modal-title-input {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid transparent;
+    outline: none;
+    width: 100%;
+    padding: 6px 0 8px;
+    transition: border-color 0.15s;
+    resize: none;
+    overflow: hidden;
+    min-height: 36px;
+    word-break: break-word;
+    field-sizing: content;
+  }
+  .modal-title-input:hover { border-bottom-color: var(--border); }
+  .modal-title-input:focus { border-bottom-color: var(--gold); }
+  .modal-title-input::placeholder { color: var(--text-dim); }
+
+  /* SMART STRIP */
+  .smart-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin: 0 28px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .smart-letter-card {
+    padding: 14px 10px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-right: 1px solid var(--border);
+    background: var(--surface2);
+    position: relative;
+  }
+  .smart-letter-card:last-child { border-right: none; }
+  .smart-letter-card:hover { background: var(--surface3); }
+  .smart-letter-card.lit { background: var(--gold-dim); }
+  .smart-letter {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 4px;
+    transition: color 0.2s;
+  }
+  .smart-letter-card.lit .smart-letter { color: var(--gold); }
+  .smart-letter-card:not(.lit) .smart-letter { color: var(--text-dim); }
+  .smart-word {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+  }
+  .smart-letter-card.lit .smart-word { color: var(--gold); }
+  .smart-check {
+    font-size: 13px;
+    margin-top: 5px;
+    transition: all 0.2s;
+  }
+  .smart-letter-card.checked .smart-check { color: var(--green); }
+  .smart-letter-card:not(.checked) .smart-check { color: var(--text-dim); }
+  /* Individual letter accent colors */
+  .smart-letter-card[id="smart-s"].lit .smart-letter { color: #60a5fa; }
+  .smart-letter-card[id="smart-s"].checked .smart-check { color: #60a5fa; }
+  .smart-letter-card[id="smart-m"].lit .smart-letter { color: #4ade80; }
+  .smart-letter-card[id="smart-m"].checked .smart-check { color: #4ade80; }
+  .smart-letter-card[id="smart-a"].lit .smart-letter { color: #fb923c; }
+  .smart-letter-card[id="smart-a"].checked .smart-check { color: #fb923c; }
+  .smart-letter-card[id="smart-r"].lit .smart-letter { color: #a78bfa; }
+  .smart-letter-card[id="smart-r"].checked .smart-check { color: #a78bfa; }
+  .smart-letter-card[id="smart-t"].lit .smart-letter { color: #f472b6; }
+  .smart-letter-card[id="smart-t"].checked .smart-check { color: #f472b6; }
+
+  /* SMART SECTIONS */
+  .smart-section {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .smart-section.focused { border-color: var(--gold); }
+  .smart-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .smart-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .smart-tag {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .smart-tag-s { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .smart-tag-m { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .smart-tag-a { background: rgba(251,146,60,0.15); color: #fb923c; }
+  .smart-tag-r { background: rgba(167,139,250,0.15); color: #a78bfa; }
+  .smart-tag-t { background: rgba(244,114,182,0.15); color: #f472b6; }
+
+  /* M grid */
+  .smart-m-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* A R T row */
+  .smart-art-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .smart-art-card { margin-bottom: 0 !important; }
+
+  /* SMART SCORE */
+  .smart-score-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface3);
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .smart-score-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; white-space: nowrap; }
+  .smart-score-track { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .smart-score-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #60a5fa, #4ade80, #fb923c, #a78bfa, #f472b6); transition: width 0.4s ease; }
+  .smart-score-pct { font-size: 14px; font-family: 'DM Serif Display', serif; color: var(--text); min-width: 36px; text-align: right; }
+
+  /* ── IMP PICKER BUTTONS (in modal) ── */
+  .imp-picker-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface3);
+    color: var(--text-muted);
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .imp-picker-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .imp-picker-btn.picked-1 { border-color: #facc15; background: rgba(250,204,21,0.15); color: #facc15; }
+  .imp-picker-btn.picked-2 { border-color: #facc15; background: rgba(250,204,21,0.15); color: #facc15; }
+  .imp-picker-btn.picked-3 { border-color: #facc15; background: rgba(250,204,21,0.15); color: #facc15; }
+  .imp-picker-btn.picked-4 { border-color: #facc15; background: rgba(250,204,21,0.15); color: #facc15; }
+  .imp-picker-btn.picked-5 { border-color: #facc15; background: rgba(250,204,21,0.15); color: #facc15; }
+  .imp-picker-btn.picked-6 { border-color: #facc15; background: rgba(250,204,21,0.15); color: #facc15; }
+  .imp-picker-btn.picked-7 { border-color: var(--orange); background: rgba(251,146,60,0.15); color: var(--orange); }
+  .imp-picker-btn.picked-8 { border-color: var(--orange); background: rgba(251,146,60,0.15); color: var(--orange); }
+  .imp-picker-btn.picked-9 { border-color: var(--red); background: rgba(248,113,113,0.15); color: var(--red); }
+  .imp-picker-btn.picked-10 { border-color: var(--red); background: rgba(248,113,113,0.15); color: var(--red); }
+
+  /* ── SWOT ── */
+  .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .swot-quadrant { border-radius: 12px; padding: 18px; }
+  .swot-s { background: rgba(74,222,128,0.07); border: 1px solid rgba(74,222,128,0.25); }
+  .swot-w { background: rgba(248,113,113,0.07); border: 1px solid rgba(248,113,113,0.25); }
+  .swot-o { background: rgba(96,165,250,0.07); border: 1px solid rgba(96,165,250,0.25); }
+  .swot-t { background: rgba(251,146,60,0.07);  border: 1px solid rgba(251,146,60,0.25); }
+  .swot-quadrant-title {
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+  }
+  .swot-s .swot-quadrant-title { color: var(--green); }
+  .swot-w .swot-quadrant-title { color: var(--red); }
+  .swot-o .swot-quadrant-title { color: var(--blue); }
+  .swot-t .swot-quadrant-title { color: var(--orange); }
+  .swot-items { display: flex; flex-direction: column; gap: 6px; }
+  .swot-item {
+    font-size: 12px; color: var(--text-muted); padding: 6px 10px;
+    background: rgba(255,255,255,0.03); border-radius: 6px; line-height: 1.4;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .swot-item::before { content: '·'; flex-shrink: 0; }
+
+  /* ── OBJETIVOS PAGE ── */
+  .obj-page { padding: 0 0 40px; }
+  .obj-vision {
+    background: linear-gradient(135deg, var(--gold-dim) 0%, rgba(201,168,76,0.05) 100%);
+    border: 1px solid var(--gold-dim);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .obj-card-eyebrow {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--gold); margin-bottom: 10px;
+  }
+  .obj-card-text {
+    font-family: 'DM Serif Display', serif; font-size: 17px;
+    line-height: 1.6; color: var(--text);
+  }
+  .obj-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+  .obj-section { }
+  .obj-section-title {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 12px;
+  }
+  .obj-dir-list { display: flex; flex-direction: column; gap: 10px; }
+  .obj-dir-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--surface3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px;
+    font-size: 14px; font-weight: 600; color: var(--text);
+  }
+  .obj-dir-item.obj-dir-lucro { border-color: var(--gold-dim); color: var(--gold); font-size: 13px; }
+  .obj-dir-item small { font-weight: 400; color: var(--text-muted); font-size: 11px; }
+  .obj-dir-icon { font-size: 18px; flex-shrink: 0; }
+  .obj-goals-list { display: flex; flex-direction: column; gap: 12px; }
+  .obj-goal {
+    background: var(--surface3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+  .obj-goal:hover { border-color: var(--gold-dim); }
+  .obj-goal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .obj-goal-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--gold-dim); color: var(--gold);
+    font-family: 'DM Serif Display', serif; font-size: 14px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .obj-goal-title { flex: 1; font-size: 14px; font-weight: 600; color: var(--text); }
+  .obj-goal-status-wrap { flex-shrink: 0; }
+  .obj-goal-status {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 12px; padding: 5px 8px; outline: none; cursor: pointer;
+  }
+  .obj-goal-note { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; padding-left: 40px; }
+  .obj-goal-progress-wrap { display: flex; align-items: center; gap: 10px; padding-left: 40px; }
+  .obj-goal-pbar { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .obj-goal-pfill { height: 100%; background: var(--gold); border-radius: 3px; transition: width 0.3s; }
+  .obj-goal-range { flex: 1; accent-color: var(--gold); }
+  .obj-goal-ppct { font-size: 13px; font-family: 'DM Serif Display', serif; color: var(--gold); min-width: 36px; text-align: right; }
+
+  /* ── MARCOS DA META ── */
+  .marco-add-btn {
+    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+    border: 1px solid var(--gold); color: var(--gold); background: transparent;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  }
+  .marco-add-btn:hover { background: var(--gold-dim); }
+  .marco-card {
+    background: var(--surface3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px; margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+  .marco-card.marco-done-card { border-color: var(--green); background: rgba(74,222,128,0.05); }
+  .marco-card.marco-nope-card { border-color: var(--red); background: rgba(248,113,113,0.05); }
+  .marco-card-header { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+  .marco-num {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--gold-dim);
+    color: var(--gold); font-weight: 900; font-size: 12px; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .marco-title-input {
+    flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--border);
+    color: var(--text); font-family: 'DM Serif Display', serif; font-size: 15px;
+    padding: 2px 0; outline: none; transition: border-color 0.15s;
+  }
+  .marco-title-input:focus { border-bottom-color: var(--gold); }
+  .marco-del { background: transparent; border: none; color: var(--text-dim); cursor: pointer; font-size: 16px; padding: 0 4px; flex-shrink:0; }
+  .marco-del:hover { color: var(--red); }
+  .marco-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .marco-field-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 6px; }
+  .marco-stars { display: flex; gap: 3px; }
+  .marco-star { font-size: 20px; color: var(--text-dim); cursor: pointer; transition: color 0.1s; user-select: none; }
+  .marco-star.lit { color: var(--gold); }
+  .marco-star:hover { color: var(--gold-light); }
+  .marco-imp-btns { display: flex; gap: 3px; flex-wrap: wrap; }
+  .marco-imp-btn {
+    width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--border);
+    background: var(--surface3); color: var(--text-muted); font-size: 11px;
+    font-weight: 800; cursor: pointer; transition: all 0.12s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .marco-imp-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .marco-status-sel {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 12px; padding: 6px 8px; outline: none; cursor: pointer;
+  }
+
+  /* ── STAR RATING ── */
+  .star-rating {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+  }
+  .star {
+    font-size: 28px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: color 0.1s, transform 0.1s;
+    line-height: 1;
+    user-select: none;
+  }
+  .star:hover,
+  .star.hover { color: var(--gold-light); transform: scale(1.15); }
+  .star.active { color: var(--gold); }
+
+  /* ── CARACTERÍSTICA BUTTONS ── */
+  .carac-btn {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: var(--surface3);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .carac-btn:hover { border-color: var(--gold); color: var(--text); }
+  .carac-btn.carac-active-rec { border-color: var(--blue); background: rgba(96,165,250,0.12); color: var(--blue); }
+  .carac-btn.carac-active-con { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
+
+  /* ── EDITABLE CELLS ── */
+  .td-editable {
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+  }
+  .td-editable:hover { background: var(--surface2); }
+  .td-editable:hover .td-plain { color: var(--text); }
+  .td-plain { font-size: 12px; color: var(--text-muted); transition: color 0.1s; display: block; text-align: center; }
+  .td-clickable { cursor: pointer; }
+  .td-clickable:hover .td-atividade-text { color: var(--gold); }
+  .td-center { text-align: center; }
+
+  /* ── CELL POPOVER ── */
+  .cell-popover {
+    position: absolute;
+    z-index: 500;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    min-width: 200px;
+    overflow: hidden;
+    animation: popIn 0.12s ease;
+  }
+  @keyframes popIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+
+  .pop-option {
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pop-option:hover { background: var(--surface3); }
+  .pop-option.pop-active { background: var(--gold-dim); }
+  .pop-option.pop-active::after { content: '✓'; margin-left: auto; color: var(--gold); font-weight: 700; }
+
+  .pop-text-wrap {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pop-input {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 8px 12px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .pop-input:focus { border-color: var(--gold); }
+  .pop-save-btn {
+    background: var(--gold);
+    color: #0d0f14;
+    border: none;
+    border-radius: 7px;
+    padding: 7px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+    align-self: flex-end;
+  }
+  .pop-save-btn:hover { background: var(--gold-light); }
+
+  /* ── EXECUÇÃO MENSAL ── */
+  .exec-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+  .exec-month {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 6px 10px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--surface3);
+    user-select: none;
+  }
+  .exec-month:hover { border-color: var(--gold); background: var(--gold-dim); }
+  .exec-month.exec-done {
+    background: rgba(74,222,128,0.15);
+    border-color: var(--green);
+    box-shadow: 0 0 8px rgba(74,222,128,0.15);
+  }
+  .exec-month.exec-done .exec-check { color: var(--green); font-size: 22px; }
+  .exec-month.exec-done .exec-month-name { color: var(--green); }
+  .exec-month.exec-nope {
+    background: rgba(248,113,113,0.12);
+    border-color: var(--red);
+  }
+  .exec-month.exec-nope .exec-check { color: var(--red); font-size: 22px; }
+  .exec-month.exec-nope .exec-month-name { color: var(--red); }
+  .exec-month.exec-locked {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: transparent;
+  }
+  .exec-month.exec-locked .exec-check { font-size: 14px; }
+  .exec-month-name {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+  }
+  .exec-month.exec-done .exec-month-name { color: var(--green); }
+  .exec-check {
+    font-size: 20px;
+    color: var(--text-dim);
+    transition: all 0.15s;
+    line-height: 1;
+  }
+  .exec-summary {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .exec-summary strong { color: var(--green); font-family: 'DM Serif Display', serif; font-size: 15px; }
+
+  /* ── DATE PICKER (Conquista full date) ── */
+  .date-picker { padding: 14px; min-width: 272px; }
+  .date-picker-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 8px;
+  }
+  .day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 4px; }
+  .day-btn {
+    padding: 5px 2px; border-radius: 5px; border: 1px solid transparent;
+    background: transparent; color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    cursor: pointer; transition: all 0.1s; text-align: center;
+  }
+  .day-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+  .day-btn.day-active { background: var(--gold); color: #0d0f14; border-color: var(--gold); font-weight: 700; }
+
+  .month-picker {
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    min-width: 240px;
+  }
+  .month-btn {
+    padding: 7px 4px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: center;
+  }
+  .month-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+  .month-btn.month-active { background: var(--gold); color: #0d0f14; border-color: var(--gold); font-weight: 700; }
+  .pop-clear-btn {
+    grid-column: 1 / -1;
+    padding: 7px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: center;
+  }
+  .pop-clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+
+</style>
+</head>
+<body>
+
+<div class="app-layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo">ZABALETA</div>
+    <div class="logo-date" id="headerDate"></div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Minimizar">‹</button>
+  </div>
+  <nav class="sidebar-nav">
+    <button class="tab active" onclick="switchTab('lista')"><span class="tab-icon">📋</span><span class="tab-label">Lista</span></button>
+    <button class="tab" onclick="switchTab('objetivos')"><span class="tab-icon">🎯</span><span class="tab-label">Objetivos</span></button>
+    <button class="tab" onclick="switchTab('swot')"><span class="tab-icon">🔍</span><span class="tab-label">SWOT</span></button>
+    <button class="tab" onclick="switchTab('dashboard')"><span class="tab-icon">📊</span><span class="tab-label">Dashboard</span></button>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-primary" onclick="openAddModal()"><span class="tab-icon">+</span><span class="btn-label"> Nova Atividade</span></button>
+    <button class="btn btn-ghost" onclick="exportCSV()"><span class="tab-icon">⬇</span><span class="btn-label"> CSV</span></button>
+  </div>
+</aside>
+
+<!-- CONTENT -->
+<div class="content-area" id="contentArea">
+<main class="main">
+
+  <!-- LISTA TAB -->
+  <div class="tab-content active" id="tab-lista">
+    <!-- RESPONSIBLE PILLS -->
+    <div class="resp-pills" id="respPills"></div>
+
+    <!-- FILTERS: search + all pills in one row -->
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+      <div class="filter-group" style="flex-shrink:0">
+        <span class="filter-label">🔍</span>
+        <input type="text" id="searchInput" placeholder="Buscar atividade..." oninput="applyFilters()">
+      </div>
+      <select id="filterResp" style="display:none"></select>
+      <select id="filterStatus" style="display:none"></select>
+      <select id="filterImp" style="display:none"></select>
+      <select id="filterRec" style="display:none"></select>
+      <span id="filterCount" style="display:none"></span>
+
+      <!-- Importante -->
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+        <span class="filter-label" style="white-space:nowrap">Import.</span>
+        <button class="resp-pill active" id="imp-pill-" onclick="setImpFilter('')">
+          <span class="pill-avatar" style="background:var(--surface3);color:var(--text-muted)">★</span>
+        </button>
+        <button class="resp-pill" id="imp-pill-low" onclick="setImpFilterRange('importante','low')">
+          <span class="pill-avatar" style="background:rgba(250,204,21,0.15);color:#facc15">1–6</span>
+        </button>
+        <button class="resp-pill" id="imp-pill-mid" onclick="setImpFilterRange('importante','mid')">
+          <span class="pill-avatar" style="background:rgba(251,146,60,0.15);color:var(--orange)">7–8</span>
+        </button>
+        <button class="resp-pill" id="imp-pill-high" onclick="setImpFilterRange('importante','high')">
+          <span class="pill-avatar" style="background:rgba(248,113,113,0.15);color:var(--red)">9–10</span>
+        </button>
+      </div>
+
+      <!-- Impacto -->
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+        <span class="filter-label" style="white-space:nowrap">Impacto</span>
+        <button class="resp-pill active" id="impact-pill-" onclick="setImpactFilter('')">
+          <span class="pill-avatar" style="background:var(--surface3);color:var(--text-muted)">★</span>
+        </button>
+        <button class="resp-pill" id="impact-pill-low" onclick="setImpactFilterRange('low')">
+          <span class="pill-avatar" style="background:rgba(250,204,21,0.15);color:#facc15">1–6</span>
+        </button>
+        <button class="resp-pill" id="impact-pill-mid" onclick="setImpactFilterRange('mid')">
+          <span class="pill-avatar" style="background:rgba(251,146,60,0.15);color:var(--orange)">7–8</span>
+        </button>
+        <button class="resp-pill" id="impact-pill-high" onclick="setImpactFilterRange('high')">
+          <span class="pill-avatar" style="background:rgba(248,113,113,0.15);color:var(--red)">9–10</span>
+        </button>
+      </div>
+
+      <!-- Característica -->
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+        <span class="filter-label" style="white-space:nowrap">Caract.</span>
+        <button class="resp-pill active" id="carac-pill-" onclick="setCaracFilter('')">
+          <span class="pill-avatar" style="background:var(--surface3);color:var(--text-muted)">★</span>
+        </button>
+        <button class="resp-pill" id="carac-pill-Conquista" onclick="setCaracFilter('Conquista')">
+          <span class="pill-avatar" style="background:rgba(201,168,76,0.15);color:var(--gold)">🏆</span>
+        </button>
+        <button class="resp-pill" id="carac-pill-Recorrência" onclick="setCaracFilter('Recorrência')">
+          <span class="pill-avatar" style="background:rgba(96,165,250,0.15);color:var(--blue)">🔄</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="th-handle" title="Arraste para reordenar"></th>
+            <th onclick="sortBy('atividade')">Atividade</th>
+            <th onclick="sortBy('responsavel')" style="text-align:center">Responsável</th>
+            <th onclick="sortBy('importante')">Importância</th>
+            <th onclick="sortBy('impactante')">Impacto</th>
+            <th onclick="sortBy('recorrencia')">Característica</th>
+            <th onclick="sortBy('dataFinal')" style="text-align:center">Prazo</th>
+            <th onclick="sortBy('status')" style="text-align:center">Status</th>
+            
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div class="result-info" id="resultInfo"></div>
+    </div>
+  </div>
+
+  <!-- OBJETIVOS TAB -->
+  <div class="tab-content" id="tab-objetivos">
+    <div class="obj-page">
+
+      <!-- VISÃO -->
+      <div class="obj-card obj-vision">
+        <div class="obj-card-eyebrow">Visão 2029</div>
+        <div class="obj-card-text">Lançar 1 empreendimento por ano em Pelotas, e a partir de 2027, lançar 1 empreendimento por ano em Alphaville/SP. Chegar em 2029 com 6 empreendimentos em construção, sendo 3 em Pelotas e 3 em Alphaville/SP. Em 2029, atingir faturamento anual médio de 200 milhões por ano.</div>
+      </div>
+
+      <!-- DIRETRIZES + OBJETIVOS -->
+      <div class="obj-grid" style="margin-bottom:28px">
+        <div class="obj-section">
+          <div class="obj-section-title">Diretrizes Estratégicas</div>
+          <div class="obj-dir-list">
+            <div class="obj-dir-item"><span class="obj-dir-icon">🏛</span><span>Profissionalizar</span></div>
+            <div class="obj-dir-item"><span class="obj-dir-icon">💰</span><span>Vender</span></div>
+            <div class="obj-dir-item"><span class="obj-dir-icon">📈</span><span>Crescer</span></div>
+            <div class="obj-dir-item obj-dir-lucro">
+              <span class="obj-dir-icon">🎯</span>
+              <span>Lucro líquido acima de <strong>20%</strong><br><small>*considerando recursos exclusivamente de terceiros</small></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="obj-section">
+          <div class="obj-section-title">Objetivos Estratégicos 2026</div>
+          <div class="obj-goals-list" id="objGoalsList">
+
+            <div class="obj-goal" data-id="o1">
+              <div class="obj-goal-header">
+                <div class="obj-goal-num">1</div>
+                <div class="obj-goal-title">Vender 26 milhões em estoque</div>
+                <div class="obj-goal-status-wrap">
+                  <select class="obj-goal-status" onchange="saveObjStatus('o1',this.value)">
+                    <option>Em andamento 🚀</option><option>Não iniciado 🕑</option><option>Finalizado ✅</option><option>Atrasado ❌</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj-goal-note">Já estamos em mais de 21 milhões devido aos distratos do Office</div>
+              <div class="obj-goal-progress-wrap">
+                <div class="obj-goal-pbar"><div class="obj-goal-pfill" id="pf-o1" style="width:0%"></div></div>
+                <input type="range" min="0" max="100" value="0" id="pr-o1" class="obj-goal-range" oninput="updateObjProg('o1',this.value)">
+                <span class="obj-goal-ppct" id="pp-o1">0%</span>
+              </div>
+            </div>
+
+            <div class="obj-goal" data-id="o2">
+              <div class="obj-goal-header">
+                <div class="obj-goal-num">2</div>
+                <div class="obj-goal-title">Obra do Tower no prazo e 10% abaixo do custo no primeiro ano</div>
+                <div class="obj-goal-status-wrap">
+                  <select class="obj-goal-status" onchange="saveObjStatus('o2',this.value)">
+                    <option>Em andamento 🚀</option><option>Não iniciado 🕑</option><option>Finalizado ✅</option><option>Atrasado ❌</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj-goal-progress-wrap">
+                <div class="obj-goal-pbar"><div class="obj-goal-pfill" id="pf-o2" style="width:0%"></div></div>
+                <input type="range" min="0" max="100" value="0" id="pr-o2" class="obj-goal-range" oninput="updateObjProg('o2',this.value)">
+                <span class="obj-goal-ppct" id="pp-o2">0%</span>
+              </div>
+            </div>
+
+            <div class="obj-goal" data-id="o3">
+              <div class="obj-goal-header">
+                <div class="obj-goal-num">3</div>
+                <div class="obj-goal-title">DFC projetado até 2029</div>
+                <div class="obj-goal-status-wrap">
+                  <select class="obj-goal-status" onchange="saveObjStatus('o3',this.value)">
+                    <option>Não iniciado 🕑</option><option>Em andamento 🚀</option><option>Finalizado ✅</option><option>Atrasado ❌</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj-goal-progress-wrap">
+                <div class="obj-goal-pbar"><div class="obj-goal-pfill" id="pf-o3" style="width:0%"></div></div>
+                <input type="range" min="0" max="100" value="0" id="pr-o3" class="obj-goal-range" oninput="updateObjProg('o3',this.value)">
+                <span class="obj-goal-ppct" id="pp-o3">0%</span>
+              </div>
+            </div>
+
+            <div class="obj-goal" data-id="o4">
+              <div class="obj-goal-header">
+                <div class="obj-goal-num">4</div>
+                <div class="obj-goal-title">Comprar 2 áreas para 2027 — Dom Joaquim e Alphaville/SP</div>
+                <div class="obj-goal-status-wrap">
+                  <select class="obj-goal-status" onchange="saveObjStatus('o4',this.value)">
+                    <option>Não iniciado 🕑</option><option>Em andamento 🚀</option><option>Finalizado ✅</option><option>Atrasado ❌</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj-goal-progress-wrap">
+                <div class="obj-goal-pbar"><div class="obj-goal-pfill" id="pf-o4" style="width:0%"></div></div>
+                <input type="range" min="0" max="100" value="0" id="pr-o4" class="obj-goal-range" oninput="updateObjProg('o4',this.value)">
+                <span class="obj-goal-ppct" id="pp-o4">0%</span>
+              </div>
+            </div>
+
+            <div class="obj-goal" data-id="o5">
+              <div class="obj-goal-header">
+                <div class="obj-goal-num">5</div>
+                <div class="obj-goal-title">Vender 100% do Lançamento de 2026</div>
+                <div class="obj-goal-status-wrap">
+                  <select class="obj-goal-status" onchange="saveObjStatus('o5',this.value)">
+                    <option>Não iniciado 🕑</option><option>Em andamento 🚀</option><option>Finalizado ✅</option><option>Atrasado ❌</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj-goal-note">Bruno ou M ou 1/3 GG</div>
+              <div class="obj-goal-progress-wrap">
+                <div class="obj-goal-pbar"><div class="obj-goal-pfill" id="pf-o5" style="width:0%"></div></div>
+                <input type="range" min="0" max="100" value="0" id="pr-o5" class="obj-goal-range" oninput="updateObjProg('o5',this.value)">
+                <span class="obj-goal-ppct" id="pp-o5">0%</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SWOT TAB -->
+  <div class="tab-content" id="tab-swot">
+    <div class="obj-page">
+      <div class="obj-section-title" style="margin-bottom:16px">Análise SWOT 2026</div>
+      <div class="swot-grid">
+
+        <!-- FORÇAS -->
+        <div class="swot-quadrant swot-s">
+          <div class="swot-quadrant-title">💪 Forças — Ambiente Interno</div>
+          <div class="swot-items">
+            <div class="swot-item">Temos um terreno garantido para o ano que vem</div>
+            <div class="swot-item">Contrato de tomada de crédito com bastante antecedência para o Tower</div>
+            <div class="swot-item">Treinamento para equipe da Zabaleta: Giants</div>
+            <div class="swot-item">Velocidade no projeto e viabilidade inicial para compra de terrenos</div>
+            <div class="swot-item">8 viagens programadas para Alphaville entre janeiro e agosto</div>
+            <div class="swot-item">Marca forte na cidade / 43 anos de tradição / credibilidade</div>
+            <div class="swot-item">Treinamento para oferecer aos parceiros: Giants</div>
+            <div class="swot-item">Marca empregadora forte</div>
+            <div class="swot-item">Cultura forte / GPTW / Gestão de pessoas estruturado</div>
+            <div class="swot-item">Todos os fornecedores querem fazer negócio com a Zabaleta</div>
+            <div class="swot-item">Um setor de gestão de pessoas, melhoria contínua e CX</div>
+          </div>
+        </div>
+
+        <!-- OPORTUNIDADES -->
+        <div class="swot-quadrant swot-o">
+          <div class="swot-quadrant-title">🚀 Oportunidades — Ambiente Externo</div>
+          <div class="swot-items">
+            <div class="swot-item">Compra antecipada de terrenos na Dom Joaquim por preço baixo — maior previsibilidade dos lançamentos</div>
+            <div class="swot-item">Entrar em um mercado muito maior em Alphaville, com potencial de centenas de milhões</div>
+            <div class="swot-item">Escritório como ponto de encontro de parcerias estratégicas e vitrine para Alphaville</div>
+            <div class="swot-item">Metas claras para todos os setores: vendas, NPS, tempo de resposta, custo de obra, prazo</div>
+            <div class="swot-item">Ocupar espaço de "melhor e maior construtora de Pelotas" deixado pela Porto 5, ACPO e Idealiza</div>
+            <div class="swot-item">Grande evento de entrega do Office elevando a marca da empresa</div>
+            <div class="swot-item">Zabaleta Academy para documentar boas práticas</div>
+            <div class="swot-item">Fortalecer relacionamento com as 7 cidades do interior convocadas para o Tower</div>
+            <div class="swot-item">Bairro planejado em Piracicaba com a parceria da Paiaguá</div>
+            <div class="swot-item">Loteamentos — fazer condomínios fechados</div>
+            <div class="swot-item">Criar ecossistema com parceiros (casas, móveis, reformas…)</div>
+            <div class="swot-item">Eventos para investidores — vender cotas de investimento</div>
+            <div class="swot-item">Construir ativos que gerem renda passiva com recursos de terceiros</div>
+          </div>
+        </div>
+
+        <!-- FRAQUEZAS -->
+        <div class="swot-quadrant swot-w">
+          <div class="swot-quadrant-title">⚠️ Fraquezas — Ambiente Interno</div>
+          <div class="swot-items">
+            <div class="swot-item">Dificuldade de venda de estoque</div>
+            <div class="swot-item">Falta de indicadores financeiros atualizados mês a mês</div>
+            <div class="swot-item">Falta dos processos desenhados</div>
+            <div class="swot-item">Contas a receber que não cobra ativamente</div>
+          </div>
+        </div>
+
+        <!-- AMEAÇAS -->
+        <div class="swot-quadrant swot-t">
+          <div class="swot-quadrant-title">🔴 Ameaças — Ambiente Externo</div>
+          <div class="swot-items">
+            <div class="swot-item">Falta dinheiro no caixa</div>
+            <div class="swot-item">Atraso na obra do Tower — 42 meses termina em dez/2028; até jun/2029 seria aceitável</div>
+            <div class="swot-item">Falta de liquidez / falta de vendas do estoque</div>
+            <div class="swot-item">Aumento do custo do dinheiro ou escassez de recursos</div>
+            <div class="swot-item">Falta de mão de obra para o Tower</div>
+            <div class="swot-item">Concorrente comprando áreas na Dom Joaquim</div>
+            <div class="swot-item">Saturação do mercado</div>
+            <div class="swot-item">Distratos em grande volume, prejudicando a liquidez</div>
+            <div class="swot-item">Custos fixos elevados — assinaturas, aluguéis, pessoas ociosas, terceirizados</div>
+            <div class="swot-item">Falta de mão de obra qualificada para o Lançamento de 2026</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</main>
+</div><!-- /content-area -->
+</div><!-- /app-layout -->
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal smart-modal">
+    <div class="modal-header">
+      <div>
+        <div class="smart-eyebrow">Meta SMART</div>
+        <textarea class="modal-title-input" id="modalTitle" rows="1" placeholder="Nome da atividade..."></textarea>
+      </div>
+      <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
+    </div>
+
+    <!-- SMART STRIP -->
+    <div class="smart-strip">
+      <div class="smart-letter-card" id="smart-s" onclick="focusSmart('s')">
+        <div class="smart-letter">S</div>
+        <div class="smart-word">Específico</div>
+        <div class="smart-check" id="check-s">○</div>
+      </div>
+      <div class="smart-letter-card" id="smart-m" onclick="focusSmart('m')">
+        <div class="smart-letter">M</div>
+        <div class="smart-word">Mensurável</div>
+        <div class="smart-check" id="check-m">○</div>
+      </div>
+      <div class="smart-letter-card" id="smart-a" onclick="focusSmart('a')">
+        <div class="smart-letter">A</div>
+        <div class="smart-word">Atingível</div>
+        <div class="smart-check" id="check-a">○</div>
+      </div>
+      <div class="smart-letter-card" id="smart-r" onclick="focusSmart('r')">
+        <div class="smart-letter">R</div>
+        <div class="smart-word">Relevante</div>
+        <div class="smart-check" id="check-r">○</div>
+      </div>
+      <div class="smart-letter-card" id="smart-t" onclick="focusSmart('t')">
+        <div class="smart-letter">T</div>
+        <div class="smart-word">Temporal</div>
+        <div class="smart-check" id="check-t">○</div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- S: ESPECÍFICO -->
+      <div class="smart-section" id="section-s">
+        <div class="smart-section-header">
+          <span class="smart-tag smart-tag-s">S</span>
+          <span class="smart-section-title">Específico — O que exatamente precisa ser feito?</span>
+        </div>
+        <textarea class="modal-textarea" id="modalDesc" 
+          placeholder="Descreva com clareza o que deve ser realizado, quem está envolvido e qual o resultado esperado..."
+          oninput="updateSmartChecks()"></textarea>
+      </div>
+
+      <!-- M: MENSURÁVEL -->
+      <div class="smart-section" id="section-m">
+        <div class="smart-section-header">
+          <span class="smart-tag smart-tag-m">M</span>
+          <span class="smart-section-title">Mensurável — Como saberemos que foi concluído?</span>
+        </div>
+
+        <!-- Característica buttons always visible -->
+        <div class="modal-field" style="margin-bottom:14px">
+          <div class="modal-field-label">Característica</div>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <button id="btnRec" class="carac-btn" onclick="setModalCarac('Recorrência')">🔄 Recorrência</button>
+            <button id="btnCon" class="carac-btn" onclick="setModalCarac('Conquista')">🏆 Conquista</button>
+          </div>
+          <select class="modal-select" id="modalRec" style="display:none" onchange="updateSmartChecks();renderExecMensal(data.find(x=>x.id===activeId)||{})">
+            <option value="">— Escolha —</option>
+            <option>Recorrência</option>
+            <option>Conquista</option>
+          </select>
+        </div>
+
+        <!-- Conquista: status only -->
+        <div id="mConquistaFields">
+          <div class="modal-field" id="statusSelectField">
+            <div class="modal-field-label">Status</div>
+            <select class="modal-select" id="modalStatus" onchange="updateSmartChecks()">
+              <option>Não iniciado 🕑</option>
+              <option>Não pronto</option>
+              <option>Finalizado ✅</option>
+              <option>Atrasado ❌</option>
+              <option>Sem informação</option>
+            </select>
+          </div>
+        </div>
+        <!-- keep hidden inputs for save compat -->
+        <input type="hidden" id="modalDI">
+        <input type="hidden" id="modalProgRange" value="0">
+
+        <!-- Recorrência: exec grid inline -->
+        <div id="mRecorrenciaFields" style="display:none">
+          <div class="exec-grid" id="execGrid"></div>
+          <div id="execRatioDisplayM" style="margin-top:12px;text-align:center">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-muted);margin-bottom:6px">Execução no Ano</div>
+            <div id="execRatioValueM" style="font-family:'DM Serif Display',serif;font-size:32px;line-height:1"></div>
+            <div style="margin-top:8px;height:6px;background:var(--surface3);border-radius:3px;overflow:hidden">
+              <div id="execRatioFillM" style="height:100%;border-radius:3px;background:var(--green);transition:width 0.3s"></div>
+            </div>
+            <div id="execRatioSubM" style="font-size:11px;color:var(--text-muted);margin-top:5px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- A R T: collapsed into one row -->
+      <div class="smart-art-row">
+        <!-- A: ATINGÍVEL -->
+        <div class="smart-section smart-art-card" id="section-a">
+          <div class="smart-section-header">
+            <span class="smart-tag smart-tag-a">A</span>
+            <span class="smart-section-title">Atingível</span>
+          </div>
+          <select class="modal-select" id="modalResp" onchange="updateSmartChecks()" style="display:none"></select>
+          <div class="modal-field">
+            <div class="modal-field-label" style="margin-bottom:8px">Dificuldade</div>
+            <div class="star-rating" id="starRating">
+              <span class="star" data-val="1" onclick="setDificuldade(1)" title="Muito fácil">★</span>
+              <span class="star" data-val="2" onclick="setDificuldade(2)" title="Fácil">★</span>
+              <span class="star" data-val="3" onclick="setDificuldade(3)" title="Médio">★</span>
+              <span class="star" data-val="4" onclick="setDificuldade(4)" title="Difícil">★</span>
+              <span class="star" data-val="5" onclick="setDificuldade(5)" title="Muito difícil">★</span>
+            </div>
+            <div id="starLabel" style="font-size:11px;color:var(--text-muted);margin-top:6px;text-align:center;min-height:14px"></div>
+          </div>
+        </div>
+
+        <!-- R: RELEVANTE -->
+        <div class="smart-section smart-art-card" id="section-r">
+          <div class="smart-section-header">
+            <span class="smart-tag smart-tag-r">R</span>
+            <span class="smart-section-title">Relevante</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="modal-field">
+              <div class="modal-field-label">Importante</div>
+              <div id="modalImpDisplay" style="margin-bottom:8px"></div>
+              <div style="display:flex;gap:4px;flex-wrap:wrap">
+                <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',1)" data-imp="modalImp" data-n="1">1</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',2)" data-imp="modalImp" data-n="2">2</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',3)" data-imp="modalImp" data-n="3">3</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',4)" data-imp="modalImp" data-n="4">4</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',5)" data-imp="modalImp" data-n="5">5</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',6)" data-imp="modalImp" data-n="6">6</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',7)" data-imp="modalImp" data-n="7">7</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',8)" data-imp="modalImp" data-n="8">8</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',9)" data-imp="modalImp" data-n="9">9</button> <button class="imp-picker-btn" onclick="pickImp('modalImp','modalImpDisplay','importante',10)" data-imp="modalImp" data-n="10">10</button>
+              </div>
+              <select class="modal-select" id="modalImp" onchange="updateSmartChecks()" style="display:none">
+                <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> <option value="6">6</option> <option value="7">7</option> <option value="8">8</option> <option value="9">9</option> <option value="10">10</option>
+              </select>
+            </div>
+            <div class="modal-field">
+              <div class="modal-field-label">Impactante</div>
+              <div id="modalImpactDisplay" style="margin-bottom:8px"></div>
+              <div style="display:flex;gap:4px;flex-wrap:wrap">
+                <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',1)" data-imp="modalImpact" data-n="1">1</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',2)" data-imp="modalImpact" data-n="2">2</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',3)" data-imp="modalImpact" data-n="3">3</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',4)" data-imp="modalImpact" data-n="4">4</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',5)" data-imp="modalImpact" data-n="5">5</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',6)" data-imp="modalImpact" data-n="6">6</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',7)" data-imp="modalImpact" data-n="7">7</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',8)" data-imp="modalImpact" data-n="8">8</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',9)" data-imp="modalImpact" data-n="9">9</button> <button class="imp-picker-btn" onclick="pickImp('modalImpact','modalImpactDisplay','impactante',10)" data-imp="modalImpact" data-n="10">10</button>
+              </div>
+              <select class="modal-select" id="modalImpact" onchange="updateSmartChecks()" style="display:none">
+                <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> <option value="6">6</option> <option value="7">7</option> <option value="8">8</option> <option value="9">9</option> <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- T: TEMPORAL — ratio for Recorrência only; hidden for Conquista -->
+        <div class="smart-section smart-art-card" id="section-t">
+          <div class="smart-section-header">
+            <span class="smart-tag smart-tag-t">T</span>
+            <span class="smart-section-title">Temporal</span>
+          </div>
+          <!-- Conquista: date field -->
+          <div id="tConquistaDate" class="modal-field">
+            <div class="modal-field-label">Prazo</div>
+            <input type="text" class="modal-input" id="modalDF" placeholder="ex: 10/06/2026" oninput="updateSmartChecks();updateDiasRestantes()">
+            <div id="diasRestantes" style="margin-top:6px;font-size:12px;font-weight:700;text-align:center;min-height:16px"></div>
+          </div>
+          <!-- Recorrência: exec ratio -->
+          <div id="execRatioDisplay" style="display:none;margin-top:4px;text-align:center">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-muted);margin-bottom:6px">Execução no Ano</div>
+            <div id="execRatioValue" style="font-family:'DM Serif Display',serif;font-size:32px;line-height:1"></div>
+            <div id="execRatioBar" style="margin-top:8px;height:6px;background:var(--surface3);border-radius:3px;overflow:hidden">
+              <div id="execRatioFill" style="height:100%;border-radius:3px;background:var(--green);transition:width 0.3s"></div>
+            </div>
+            <div id="execRatioSub" style="font-size:11px;color:var(--text-muted);margin-top:5px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARCOS DA META -->
+      <div class="smart-section" style="margin-top:0" id="secaoMarcos">
+        <div class="smart-section-header" style="justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:14px">🎯</span>
+            <span class="smart-section-title">Marcos da Meta</span>
+          </div>
+          <button class="marco-add-btn" onclick="addMarco()">+ Marco</button>
+        </div>
+        <div id="marcosContainer"></div>
+      </div>
+
+      <!-- NOTAS -->
+      <div class="smart-section" style="margin-top:0">
+        <div class="smart-section-header">
+          <span style="font-size:14px">📎</span>
+          <span class="smart-section-title">Notas adicionais</span>
+        </div>
+        <input type="text" class="modal-input" id="modalNotes" placeholder="Observações rápidas...">
+      </div>
+      <!-- hidden legacy anchor for renderExecMensal compat -->
+      <div id="secaoExecucao" style="display:none"></div>
+
+      <!-- SMART SCORE (hidden) -->
+      <div class="smart-score-bar" id="smartScoreBar" style="display:none">
+        <div class="smart-score-label">Completude SMART</div>
+        <div class="smart-score-track">
+          <div class="smart-score-fill" id="smartScoreFill"></div>
+        </div>
+        <div class="smart-score-pct" id="smartScorePct">0%</div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-danger" onclick="deleteActivity()">🗑 Excluir</button>
+        <button class="btn-retire" onclick="retireActivity()">⊘ Retirar</button>
+        <button class="btn btn-ghost" onclick="closeModal('detailModal')">Cancelar</button>
+        <button class="btn-save" onclick="saveActivity()">💾 Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal add-modal">
+    <div class="modal-header">
+      <div class="modal-title">Nova Atividade</div>
+      <button class="modal-close" onclick="closeModal('addModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="add-form-grid">
+        <div class="modal-field add-form-full">
+          <div class="modal-field-label">Atividade *</div>
+          <input type="text" class="modal-input" id="addAtividade" placeholder="Descreva a atividade...">
+        </div>
+        <div class="modal-field add-form-full">
+          <div class="modal-field-label">Descrição / Observações</div>
+          <textarea class="modal-textarea" id="addDesc" placeholder="Detalhes adicionais..." style="min-height:60px"></textarea>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Responsável *</div>
+          <select class="modal-select" id="addResp"></select>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Status</div>
+          <select class="modal-select" id="addStatus">
+            <option>Não iniciado 🕑</option>
+            <option>Não pronto</option>
+            <option>Finalizado ✅</option>
+            <option>Atrasado ❌</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Característica</div>
+          <select class="modal-select" id="addRec">
+            <option value="">— Escolha —</option>
+            <option>Recorrência</option>
+            <option>Conquista</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Importante</div>
+          <select class="modal-select" id="addImp">
+            <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5" selected>5</option> <option value="6">6</option> <option value="7">7</option> <option value="8">8</option> <option value="9">9</option> <option value="10">10</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Impactante</div>
+          <select class="modal-select" id="addImpact">
+            <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5" selected>5</option> <option value="6">6</option> <option value="7">7</option> <option value="8">8</option> <option value="9">9</option> <option value="10">10</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Data Inicial</div>
+          <input type="text" class="modal-input" id="addDI" placeholder="ex: Abril/2026">
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Data Final</div>
+          <input type="text" class="modal-input" id="addDF" placeholder="ex: Junho/2026">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('addModal')">Cancelar</button>
+        <button class="btn-save" onclick="confirmAdd()">+ Adicionar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const STORAGE_KEY = 'zabaleta_plano_2026';
+
+const RAW = [{"id":1,"atividade":"Reuniões Mensais de Resultado - precisamos dar uma nota para essa reunião. Todos os setores falaram; todos trouxeram os indicadores mínimos; os inidicadores estão dentro das metas; houve ata; houve plano de ação, ideia de melhoria; as pessoas foram vulneráveis","notes":"","responsavel":"Diretoria","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":2,"atividade":"Reuniões Mensais de Crescimento - o plano tinha data; a atividade era específica, tinha dono; era relevante; o quanto foi atingido em prazo, custo e resultado;","notes":"","responsavel":"Diretoria","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":3,"atividade":"Reuniões de Cultura mensais para Gestão e para Obra","notes":"","responsavel":"Diretoria","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":4,"atividade":"Reuniões one on one entre líderes e suas equipes - é um indicador de RH; qual o percentual de reuniões executadas de cada líder","notes":"","responsavel":"Diretoria","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Outubro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":5,"atividade":"Visitas nas imobiliárias *160 por mês: 10 por semana Ricardo, 15 do Jonata e 15 da Lara","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":6,"atividade":"Visitas nas cidades do interior - 1 visita trimestral em cada uma das 7 cidades","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":7,"atividade":"Pesquisa de Satisfação dos Corretores *em todas as visitas","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":8,"atividade":"Presença no agro - associação rural, remates - qual o plano base: frequentar um grupo, eventos, patrocinar um espaço,","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":9,"atividade":"Presença nos médicos -","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":10,"atividade":"Presença no meio empresarial -","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":11,"atividade":"Atas dos ''Combinados'' com clientes, parceiros, etc","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":12,"atividade":"Políticas do Setor Comercial - onde ficará isso?; quais as políticas mais importantes","notes":"","responsavel":"Ricardo","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Janeiro/2027","dataFinal":"10/12/2027","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":13,"atividade":"CRM","notes":"","responsavel":"Ricardo","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Janeiro/2028","dataFinal":"Dezembro/2028","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":14,"atividade":"Power Hours - meta mensal por gerente","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2029","dataFinal":"Dezembro/2029","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":15,"atividade":"Formação de especialistas Zabaleta","notes":"Definir um orçamento, os diferenciais, os encontros,","responsavel":"Ricardo","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Abril/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":16,"atividade":"Processos de Comercial - ISO 9001","notes":"","responsavel":"Ricardo","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":17,"atividade":"Indicadores do Comercial no BI","notes":"","responsavel":"Ricardo","recorrencia":"Recorrência","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":18,"atividade":"Base de clientes Zabaleta","notes":"","responsavel":"Ricardo","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2039","dataFinal":"Dezembro/2039","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":19,"atividade":"Um Open House/Evento para Clientes por mês entre janeiro e agosto","notes":"","responsavel":"Marthina","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"Agosto/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":20,"atividade":"Acelera Corretores - 3 eventos no primeiro semestre","notes":"redefinir para eventos com palestrantes presenciais","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":21,"atividade":"Acelera Gestores - 3 eventos no primeiro semestre","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":22,"atividade":"Treinamento anual da Zabaleta","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":23,"atividade":"Decorado Final 08","notes":"Decorar também um final 06","responsavel":"Marthina","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"10/02/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":24,"atividade":"Inauguração do Decorado Final 08","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":25,"atividade":"Campanha de Vendas - Momento de Ascenção","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Junho/2026","dataFinal":"10/07/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":26,"atividade":"Decorado Final 06 (Maurício)","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":27,"atividade":"Inauguração do Decorado Final 06 (Maurício)","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":28,"atividade":"Redes sociais com 3 posts por semana","notes":"","responsavel":"Marthina","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":29,"atividade":"Site atualizado","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Abril/2026","dataFinal":"10/12/2032","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":30,"atividade":"Tráfego pago para distribuição de conteúdos","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":31,"atividade":"Comunidade dos corretores com publicações semanais","notes":"","responsavel":"Marthina","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":32,"atividade":"Banco de depoimentos de clientes e corretores","notes":"100 depoimentos, sendo 20 de clientes","responsavel":"Marthina","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Janeiro/2033","dataFinal":"Dezembro/2033","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":33,"atividade":"Patrocínios dos principais eventos/feiras da cidade","notes":"Quais?","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":34,"atividade":"Filme da Zabaleta - passar no cinema no Lançamento","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":35,"atividade":"Estacionamento rotativo no terreno do Zanin","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/09/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":36,"atividade":"Outdoor na Dom Joaquim e outras regiões nobres","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":37,"atividade":"Associação de marca com restaurantes, lojas de roupas, centros de beleza, esportes como tenis, pádel, golfe","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":38,"atividade":"Chamar influenciadores para os eventos","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":39,"atividade":"Processos de Marketing - ISO 9001","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":40,"atividade":"Vistorias Office","notes":"","responsavel":"Tati","recorrencia":"Recorrência","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":41,"atividade":"Inadimplência Office","notes":"","responsavel":"Tati","recorrencia":"Recorrência","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":42,"atividade":"Plano de adiantamento do Financiamento dos Clientes","notes":"","responsavel":"Tati","recorrencia":"Conquista","status":"","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":43,"atividade":"Processos de CX - ISO 9001","notes":"","responsavel":"Tati","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":44,"atividade":"Calendário de ações para os clientes","notes":"","responsavel":"Tati","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":45,"atividade":"SLA - tempo de resposta e resolução","notes":"","responsavel":"Tati","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":46,"atividade":"Indicadores do CX no BI","notes":"","responsavel":"Tati","recorrencia":"Recorrência","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":47,"atividade":"CX convidando os clientes para conhecer","notes":"","responsavel":"Tati","recorrencia":"Recorrência","status":"Não iniciado 🕑","dataInicial":"Janeiro/2041","dataFinal":"Dezembro/2041","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":48,"atividade":"Entrega do Office - NÓS QUE FIZEMOS","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/01/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":49,"atividade":"Cultura - Pá para os líderes","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/01/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":50,"atividade":"Cultura - Grito de guerra","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/01/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":51,"atividade":"Cultura - Design do Tapume e instalações de trabalho","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":52,"atividade":"Cultura - Livro impresso do Código de Cultura","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Maio/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":53,"atividade":"Cultura - Nome para os colaboradores","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Maio/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":54,"atividade":"Contratação do Gerente Comercial 2 e 3","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/02/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":55,"atividade":"Contratação Time de Marketing - audiovisual e assistente","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/02/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":56,"atividade":"Contratação de Secretaria","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Março/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":57,"atividade":"Contratação de Técnico de Segurança do Trabalho","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":58,"atividade":"Contratação de Assistente de Engenharia","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":59,"atividade":"PDI com programas do Giants","notes":"Calendário completo visível para a Diretoria; Calendário individual de cada colaborador; Mensagens de antecipação; Cheque de presente do curso; Coffe, brindes, troféus, organização geral dos eventos; Registro de tudo e envio para nossa Gerente de Sucesso Giants","responsavel":"Mariana","recorrencia":"Recorrência","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"Março/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":60,"atividade":"Indicador de eficiência das pessoas","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":61,"atividade":"Endomarketing","notes":"","responsavel":"Mariana","recorrencia":"Recorrência","status":"Sem informação","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":62,"atividade":"Reunião One on one do RH com todas as lideranças mensalmente","notes":"","responsavel":"Mariana","recorrencia":"Recorrência","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":63,"atividade":"Revisar Organograma trimestralmente com a diretoria","notes":"","responsavel":"Mariana","recorrencia":"Recorrência","status":"Sem informação","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":64,"atividade":"Projeção mensal de mudanças no Organograma","notes":"","responsavel":"Mariana","recorrencia":"Recorrência","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":65,"atividade":"Pesquisa de Clima Organizacional trimestral","notes":"","responsavel":"Mariana","recorrencia":"Recorrência","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":66,"atividade":"Plano de Cargos e Salários 2026","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Maio/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":67,"atividade":"Zezinho de 5 do Fred","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Fevereiro/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":68,"atividade":"Crachás e bótons com perfil comportamental","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":69,"atividade":"Formação ZABALETA de Lideranças da Gestão","notes":"Metodologia própria de liderança, tal como a metodologia de Dale Carnegie; precisamos ter uma organização de 12 módulos, para que sejam aplicados uma vez por mês, e se repita anualmente.","responsavel":"Mariana","recorrencia":"Recorrência","status":"Não pronto","dataInicial":"Abril/2026","dataFinal":"Abril/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":70,"atividade":"Day Trainning com Marcus Marques dia 25/03","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Março/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":71,"atividade":"Avaliação de Desempenho Trimestral de colaboradores","notes":"","responsavel":"Mariana","recorrencia":"Recorrência","status":"Finalizado ✅","dataInicial":"Março/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":72,"atividade":"FAQ do DP","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Abril/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":73,"atividade":"Programa de indicação para as vagas da empresa","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":74,"atividade":"DP - Automação de processos","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Sem informação","dataInicial":"Abril/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":75,"atividade":"DP - Ponto por reconhecimento facial","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Fevereiro/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":76,"atividade":"Processos RH - ISO 9001","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Sem informação","dataInicial":"Janeiro/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":77,"atividade":"Renovação GPTW - maio","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Maio/2026","dataFinal":"Maio/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":78,"atividade":"Plataforma de vídeos da Zabaleta","notes":"Ferramenta de hospedagem de vídeos; cada colaborador tem acesso aos seus setores; temos que mapear os treinamentos que devem estar na plataforma; dar um prazo para que cada líder organize o conhecimento e grave a aula.","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Julho/2026","dataFinal":"10/07/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":79,"atividade":"Processo de Integração aprimorado com plataforma de vídeos","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Julho/2026","dataFinal":"10/07/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":80,"atividade":"Poíticas da Gestão de Pessoas","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Maio/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":81,"atividade":"Festa de Fim de Ano","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Dezembro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":82,"atividade":"Zabaleta Transforma 2026","notes":"","responsavel":"Mariana","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Dezembro/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":83,"atividade":"Programa de Participação nos Resultados - PPR","notes":"","responsavel":"Maurício","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":84,"atividade":"Diminuir o custo do Zabaleta Tower em 10% - de 62 para 56 milhões","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":85,"atividade":"Criar roteiro de formações de profissionais","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":86,"atividade":"Aprovar 2 próximos projetos em 2026","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":87,"atividade":"Certidão de uso e Ocupação do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/01/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":88,"atividade":"Aprovar Viabilidade Urbanística do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":89,"atividade":"Aprovar Viabilidade SANEP do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Maio/2026","dataFinal":"10/06/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":90,"atividade":"Aprovar Viabilidade Equatorial do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Maio/2026","dataFinal":"10/06/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":91,"atividade":"Aprovar Viabilidade COMAER do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Abril/2026","dataFinal":"10/06/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":92,"atividade":"Aprovar LAP do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Março/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":93,"atividade":"Aprovar unificação do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Junho/2026","dataFinal":"10/08/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":94,"atividade":"Aprovar Projeto Arquitetônico  do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Julho/2026","dataFinal":"10/09/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":95,"atividade":"Aprovar RI do terreno 1","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Setembro/2026","dataFinal":"10/10/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":96,"atividade":"Aprovar Viabilidade Urbanística do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":97,"atividade":"Aprovar Viabilidade SANEP do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":98,"atividade":"Aprovar Viabilidade Equatorial do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":99,"atividade":"Aprovar Viabilidade COMAER do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":100,"atividade":"Aprovar LAP do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":101,"atividade":"Aprovar unificação do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":102,"atividade":"Aprovar Projeto Arquitetônico  do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":103,"atividade":"Aprovar RI do terreno 2","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":104,"atividade":"Escrever Políticas e Processos","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"Janeiro/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":105,"atividade":"Estruturar equipe de projeto, detalhamento e quantitativo","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":106,"atividade":"Instalações provisórias no nível indústria e criar plano de segurança","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":107,"atividade":"Transformar os gestores em guardiões da cultura","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":108,"atividade":"Melhorar logística de suprimentos no canteiro de obras","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":109,"atividade":"Formatar cenários da Reforma Tributária na operação (definição de metodos construtivos para novos empreendimentos)","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":110,"atividade":"Estruturar programa de remuneração variável","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":111,"atividade":"Plano para recuperar feriados","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":112,"atividade":"Contratar um arquiteto (nível analista) - para equipe de projeto, detalhamento e quantitativo","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":113,"atividade":"Tapume Zanin, Loja Zabaleta e Decorado 150m","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"Março/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":114,"atividade":"Reforma do escritório do Office","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Não pronto","dataInicial":"","dataFinal":"10/06/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":115,"atividade":"Tapume Tower","notes":"","responsavel":"Christian","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":119,"atividade":"Planejamento Orçamentário 2025","notes":"","responsavel":"Diretoria","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":120,"atividade":"Estudo de quanto vale a pena dar de desconto para pagamento à vista e pagamento durante a obra","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Agosto/2026","dataFinal":"10/08/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":121,"atividade":"Relatório: o quanto o tempo de obra de 48 meses vai nos trazer mais custo financeiro que 42 meses","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Agosto/2026","dataFinal":"10/08/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":122,"atividade":"Relatório: o quanto influencia no custo financeiro receber 30/70, 35/65, 40/60","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Agosto/2026","dataFinal":"10/08/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":123,"atividade":"Contas a receber - Implementação de sistema de cobrança","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":124,"atividade":"Contas a receber - Plano de recuperação de inadimplência","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Sem informação","dataInicial":"Fevereiro/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":125,"atividade":"Contas a pagar - Revisão e modernização dos processos","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Sem informação","dataInicial":"Janeiro/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":126,"atividade":"Controladoria - Auditoria dos pagamentos","notes":"","responsavel":"Kelli","recorrencia":"Recorrência","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"Abril/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":127,"atividade":"Valuation anual","notes":"","responsavel":"Maurício","recorrencia":"Conquista","status":"Atrasado ❌","dataInicial":"Janeiro/2026","dataFinal":"Dezembro/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":128,"atividade":"Lançamento Dom Joaquim 2025","notes":"","responsavel":"Maurício","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":129,"atividade":"Google Workspace único para toda a empresa","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":130,"atividade":"Utilizar mais o Sistema para extrair dados","notes":"","responsavel":"Kelli","recorrencia":"Recorrência","status":"Em andamento 🚀","dataInicial":"Janeiro/2026","dataFinal":"Agosto/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":131,"atividade":"DFC por empreendimento e consolidado da empresa geral","notes":"","responsavel":"Kelli","recorrencia":"Recorrência","status":"Em andamento 🚀","dataInicial":"Janeiro/2026","dataFinal":"Março/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":132,"atividade":"Colocar a Contabilidade em dia *enviar todo dia 5 e demandar retorno dia 20 *ver se temos direito ao balancete trimestral","notes":"","responsavel":"Kelli","recorrencia":"Recorrência","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"Fevereiro/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":133,"atividade":"Política de Renegociação","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Em andamento 🚀","dataInicial":"Março/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":134,"atividade":"Máquina de cartão","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Finalizado ✅","dataInicial":"Janeiro/2026","dataFinal":"10/02/2026","importancia":"Alta","progresso":100,"descricao":"","importante":2,"impactante":2},{"id":135,"atividade":"Criar relacionamento com outros bancos (Banrisul, Bradesco, Safra...)","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Em andamento 🚀","dataInicial":"Fevereiro/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":136,"atividade":"Criar plano de ação para estratégia tributária dos proximos empreendimentos","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2026","dataFinal":"10/12/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":137,"atividade":"Estratégia tributária: vale a pena agilizar os RI's até 2028?","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"","dataFinal":"","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":138,"atividade":"Balanço patrimonial mensal","notes":"","responsavel":"Kelli","recorrencia":"Recorrência","status":"Em andamento 🚀","dataInicial":"Janeiro/2026","dataFinal":"Março/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":139,"atividade":"Giants: 2 mentorias mensais entre janeiro e abril; Presencial 30 e 31 de março; Incompany em abril; pedir conteúdo para assistir em janeiro","notes":"","responsavel":"Kelli","recorrencia":"Recorrência","status":"Em andamento 🚀","dataInicial":"Janeiro/2026","dataFinal":"Agosto/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":140,"atividade":"Desligamento do Office *meta de desligar o saldo devedor (cerca de 8 milhões) até março","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Em andamento 🚀","dataInicial":"Fevereiro/2026","dataFinal":"10/03/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":141,"atividade":"Meta para prazo do Financiamento do Tower","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Em andamento 🚀","dataInicial":"Janeiro/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":142,"atividade":"Organizar todos os documentos de clientes e fornecedores no Google e no Sistema","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Março/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":143,"atividade":"Controle de escrituras a averbações na prefeitura","notes":"","responsavel":"Kelli","recorrencia":"Recorrência","status":"Não iniciado 🕑","dataInicial":"Março/2026","dataFinal":"Maio/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":144,"atividade":"Bot de primeiro atendimento","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Abril/2026","dataFinal":"10/05/2026","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":145,"atividade":"Processos de Administrativo e Financeiro - ISO 9001","notes":"","responsavel":"Kelli","recorrencia":"Conquista","status":"Em andamento 🚀","dataInicial":"Janeiro/2026","dataFinal":"10/04/2026","importancia":"Alta","progresso":50,"descricao":"","importante":2,"impactante":2},{"id":146,"atividade":"Lançamento - formulário para coletar feedbacks sobre o Tower","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2031","dataFinal":"10/12/2031","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":147,"atividade":"Maquete do próximo Lançamento","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Abril/2026","dataFinal":"10/12/2035","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":148,"atividade":"Nova placa do trapiche e banheiros na praça","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2036","dataFinal":"10/12/2036","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":149,"atividade":"Material de vídeo para nos destacarmos no Giants","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2037","dataFinal":"10/12/2037","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2},{"id":150,"atividade":"Vídeo institucional da Zabaleta para Alphaville","notes":"","responsavel":"Marthina","recorrencia":"Conquista","status":"Não iniciado 🕑","dataInicial":"Janeiro/2038","dataFinal":"10/12/2038","importancia":"Alta","progresso":0,"descricao":"","importante":2,"impactante":2}];
+
+// Avatar colors per person
+const PERSON_INFO = {
+  'Christian': { setor: 'Operações',      cor: ['#34d399','#0d0f14'] },
+  'Mariana':   { setor: 'Pessoas',         cor: ['#fb923c','#0d0f14'] },
+  'Marthina':  { setor: 'Marketing',       cor: ['#f472b6','#0d0f14'] },
+  'Kelli':     { setor: 'Adm. Financeiro', cor: ['#e879f9','#0d0f14'] },
+  'Ricardo':   { setor: 'Comercial',       cor: ['#60a5fa','#0d0f14'] },
+  'Maurício':  { setor: 'Geral',           cor: ['#22d3ee','#0d0f14'] },
+  'Tati':      { setor: 'CX',              cor: ['#a78bfa','#0d0f14'] },
+  'Diretoria': { setor: 'Diretoria',       cor: ['#c9a84c','#0d0f14'] },
+};
+function getInfo(name)  { return PERSON_INFO[name] || { setor: name, cor: ['#7a8099','#0d0f14'] }; }
+function getSetor(name) { return getInfo(name).setor; }
+function getCor(name)   { return getInfo(name).cor; }
+function getAvatar(name) { const c=getCor(name); return `background:${c[0]};color:${c[1]}`; }
+function getInitials(name) { return getSetor(name); }
+
+// ── STATE ──
+let data = [];
+let filtered = [];
+let sortCol = 'id', sortDir = 1;
+let activeId = null;
+let statusFilter = '';
+let respFilter = '';
+
+function load() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    data = s ? JSON.parse(s) : JSON.parse(JSON.stringify(RAW));
+  } catch(e) { data = JSON.parse(JSON.stringify(RAW)); }
+  // Migration: replace old 'Ocorrendo no prazo' status with 'Não pronto'
+  let migrated = false;
+  data.forEach(d => {
+    if ((d.status || '').includes('Ocorrendo')) {
+      d.status = 'Não pronto';
+      migrated = true;
+    }
+    // Migration: classify unclassified Marthina activities as Conquista
+    if (d.responsavel === 'Marthina' && !['Recorrência','Conquista'].includes(d.recorrencia)) {
+      d.recorrencia = 'Conquista';
+      migrated = true;
+    }
+    // Migration: classify unclassified Mariana (Pessoas) activities as Recorrência
+    if (d.responsavel === 'Mariana' && !['Recorrência','Conquista'].includes(d.recorrencia)) {
+      d.recorrencia = 'Recorrência';
+      migrated = true;
+    }
+    // Migration: classify all Christian (Operações) activities as Conquista
+    if (d.responsavel === 'Christian') {
+      d.recorrencia = 'Conquista';
+      migrated = true;
+    }
+  });
+  if (migrated) save();
+}
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e){}
+}
+
+// ── STATUS HELPERS ──
+function statusBadge(s) {
+  if (!s) return '<span class="badge badge-gray">—</span>';
+  if (s.includes('Finalizado')) return `<span class="badge badge-green">${s}</span>`;
+  if (s.includes('Ocorrendo')) return `<span class="badge badge-blue">${s}</span>`;
+  if (s.includes('andamento')) return `<span class="badge badge-purple">🚀 Em andamento</span>`;
+  if (s.includes('Atrasado')) return `<span class="badge badge-red">${s}</span>`;
+  if (s.includes('Não iniciado')) return `<span class="badge badge-orange">${s}</span>`;
+  if (s.includes('pronto')) return `<span class="badge badge-orange">⚠ Não pronto</span>`;
+  if (s.includes('informação')) return `<span class="badge badge-gray">Sem informação</span>`;
+  return `<span class="badge badge-gray">${s}</span>`;
+}
+function progColor(p) {
+  if (p >= 100) return 'var(--green)';
+  if (p >= 60) return 'var(--blue)';
+  if (p >= 30) return 'var(--gold)';
+  return 'var(--orange)';
+}
+const IMP_OPTIONS    = [1,2,3,4,5,6,7,8,9,10];
+const IMPACT_OPTIONS = [1,2,3,4,5,6,7,8,9,10];
+
+// Maps each number 1-10 to its phrase and color tier
+function impLevel(n) {
+  if (n <= 6) return { label: 'Pode acabar não sendo uma prioridade', color: '#facc15', bg: 'rgba(250,204,21,0.12)' };
+  if (n <= 8) return { label: 'É meta, mas se ficar para o ano que vem, ok', color: 'var(--orange)', bg: 'rgba(251,146,60,0.12)' };
+  return { label: 'Tem que ser feito, se não as coisas têm que mudar radicalmente', color: 'var(--red)', bg: 'rgba(248,113,113,0.12)' };
+}
+function impactLevel(n) {
+  if (n <= 6) return { label: 'Impacto pouco perceptível', color: '#facc15', bg: 'rgba(250,204,21,0.12)' };
+  if (n <= 8) return { label: 'Impacto relevante', color: 'var(--orange)', bg: 'rgba(251,146,60,0.12)' };
+  return { label: 'Impacto altíssimo em crescimento, custo ou qualidade', color: 'var(--red)', bg: 'rgba(248,113,113,0.12)' };
+}
+
+const IMP_LABELS    = Object.fromEntries([1,2,3,4,5,6,7,8,9,10].map(n => [n, impLevel(n)]));
+const IMPACT_LABELS = Object.fromEntries([1,2,3,4,5,6,7,8,9,10].map(n => [n, impactLevel(n)]));
+
+// Table: show only the number with color dot
+function impBadge(type, val) {
+  const map = type === 'importante' ? IMP_LABELS : IMPACT_LABELS;
+  const n = parseInt(val) || 2;
+  const info = map[n] || map[2];
+  return `<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:800;background:${info.bg};color:${info.color};border:1.5px solid ${info.color}40">${n}</span>`;
+}
+
+// Modal: show number + full sentence
+function impBadgeFull(type, val) {
+  const map = type === 'importante' ? IMP_LABELS : IMPACT_LABELS;
+  const n = parseInt(val) || 2;
+  const info = map[n] || map[2];
+  return `<span style="display:inline-flex;align-items:center;gap:10px;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;background:${info.bg};color:${info.color};border:1.5px solid ${info.color}40;line-height:1.3">
+    <span style="font-size:15px;font-weight:900;flex-shrink:0">${n}</span>
+    <span>${info.label}</span>
+  </span>`;
+}
+
+// ── RESP PILLS ──
+function renderRespPills() {
+  const resps = [...new Set(data.map(d=>d.responsavel))].filter(Boolean).sort();
+  const pills = document.getElementById('respPills');
+  pills.innerHTML = `
+    <button class="resp-pill resp-pill-compact ${respFilter===''?'active':''}" onclick="setRespFilter('')">
+      <span class="pill-avatar" style="background:var(--surface3);color:var(--text-muted)">★</span>
+      <span class="resp-pill-name">Todos</span>
+      <span class="resp-pill-count">${data.length}</span>
+    </button>
+  ` + resps.map(r => {
+    const col = getCor(r);
+    const count = data.filter(d=>d.responsavel===r).length;
+    return `
+      <button class="resp-pill resp-pill-compact ${respFilter===r?'active':''}" onclick="setRespFilter('${r}')">
+        <div class="resp-pill-inner">
+          <span class="resp-pill-setor" style="color:${col[0]}">${getSetor(r)}</span>
+          <span class="resp-pill-name">${r}</span>
+          <span class="resp-pill-count">${count}</span>
+        </div>
+      </button>`;
+  }).join('');
+}
+
+function setRespFilter(name) {
+  respFilter = name;
+  // sync the select too
+  document.getElementById('filterResp').value = name;
+  renderRespPills();
+  applyFilters();
+}
+
+// ── POPULATE SELECTS ──
+function populateSelects() {
+  const resps = [...new Set(data.map(d=>d.responsavel))].filter(Boolean).sort();
+  const statuses = [...new Set(data.map(d=>d.status))].filter(Boolean).sort();
+  const recs = [...new Set(data.map(d=>d.recorrencia))].filter(Boolean).sort();
+
+  const fr = document.getElementById('filterResp');
+  const fs = document.getElementById('filterStatus');
+  const frec = document.getElementById('filterRec');
+  fr.innerHTML = '<option value="">Todos</option>' + resps.map(r=>`<option>${r}</option>`).join('');
+  fs.innerHTML = '<option value="">Todos</option>' + statuses.map(s=>`<option>${s}</option>`).join('');
+  frec.innerHTML = '<option value="">Todas</option>' + recs.map(r=>`<option>${r}</option>`).join('');
+
+  // Modal selects
+  ['modalResp','addResp'].forEach(id => {
+    document.getElementById(id).innerHTML = resps.map(r=>`<option>${r}</option>`).join('');
+  });
+}
+
+// ── STATS ──
+function renderStats() {
+  const total = data.length;
+  const fin = data.filter(d=>d.status&&d.status.includes('Finalizado')).length;
+  const and = data.filter(d=>d.status&&(d.status.includes('andamento')||d.status.includes('Ocorrendo'))).length;
+  const atr = data.filter(d=>d.status&&d.status.includes('Atrasado')).length;
+  const ni  = data.filter(d=>d.status&&d.status.includes('Não iniciado')).length;
+  const sp  = data.filter(d=>!d.status).length;
+
+  const stats = [
+    {label:'Total', val:total, sub:'atividades', key:''},
+    {label:'Finalizado', val:fin, sub:'concluídas', key:'Finalizado ✅', color:'var(--green)'},
+    {label:'Em andamento', val:and, sub:'em progresso', key:'__and__', color:'var(--blue)'},
+    {label:'Não iniciado', val:ni, sub:'aguardando', key:'Não iniciado 🕑', color:'var(--orange)'},
+    {label:'Atrasado', val:atr, sub:'precisam atenção', key:'Atrasado ❌', color:'var(--red)'},
+    {label:'Sem status', val:sp, sub:'sem informação', key:'__empty__', color:'var(--text-dim)'},
+  ];
+
+  document.getElementById('statsRow').innerHTML = stats.map(s=>`
+    <div class="stat-card ${statusFilter===s.key?'active-filter':''}" onclick="filterByStatus('${s.key}')">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value" style="${s.color?`color:${s.color}`:''}}">${s.val}</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>
+  `).join('');
+}
+
+function filterByStatus(key) {
+  statusFilter = statusFilter === key ? '' : key;
+  applyFilters();
+  renderStats();
+}
+
+// ── FILTERS ──
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const resp = document.getElementById('filterResp').value;
+  const status = document.getElementById('filterStatus').value;
+  const rec = document.getElementById('filterRec').value;
+  const imp = document.getElementById('filterImp').value;
+
+  // Keep respFilter in sync with select
+  if (resp !== respFilter) { respFilter = resp; renderRespPills(); }
+
+  filtered = data.filter(d => {
+    if (search && !d.atividade.toLowerCase().includes(search) && !d.notes.toLowerCase().includes(search)) return false;
+    if (resp && d.responsavel !== resp) return false;
+    if (status && d.status !== status) return false;
+    if (rec && d.recorrencia !== rec) return false;
+    if (impFilterRange && !matchesRange(d.importante, impFilterRange)) return false;
+    if (impactFilterRange && !matchesRange(d.impactante, impactFilterRange)) return false;
+    if (caracFilter && d.recorrencia !== caracFilter) return false;
+    if (statusFilter) {
+      if (statusFilter === '__and__') {
+        if (!d.status || (!d.status.includes('andamento') && !d.status.includes('Ocorrendo'))) return false;
+      } else if (statusFilter === '__empty__') {
+        if (d.status) return false;
+      } else {
+        if (d.status !== statusFilter) return false;
+      }
+    }
+    return true;
+  });
+
+  // Default sort: ranking by impacto desc, then importancia desc; user column sort overrides
+  if (sortCol === 'id') {
+    filtered.sort((a, b) => {
+      // Retired always last
+      if (!!a.retirada !== !!b.retirada) return a.retirada ? 1 : -1;
+      const scoreA = (parseInt(a.impactante)||0) + (parseInt(a.importante)||0);
+      const scoreB = (parseInt(b.impactante)||0) + (parseInt(b.importante)||0);
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      return (parseInt(b.importante)||0) - (parseInt(a.importante)||0);
+    });
+  } else {
+    filtered.sort((a,b) => {
+      if (!!a.retirada !== !!b.retirada) return a.retirada ? 1 : -1;
+      if (sortCol === 'dataFinal') {
+        const da = parseDateForSort(a.dataFinal), db = parseDateForSort(b.dataFinal);
+        return (da - db) * sortDir;
+      }
+      let av = a[sortCol]||'', bv = b[sortCol]||'';
+      if (typeof av === 'number') return (av-bv)*sortDir;
+      return av.localeCompare(bv, 'pt')*sortDir;
+    });
+  }
+
+  document.getElementById('filterCount').textContent = filtered.length + ' result.';
+  renderTable();
+}
+
+let caracFilter = '';
+
+function setCaracFilter(val) {
+  caracFilter = val;
+  document.querySelectorAll('[id^="carac-pill-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById('carac-pill-' + val).classList.add('active');
+  applyFilters();
+}
+let impactFilter = '';
+let impFilterRange = '';
+let impactFilterRange = '';
+
+function setImpFilter(type, val) {
+  if (type === '') {
+    impFilter = ''; impFilterRange = '';
+    document.getElementById('filterImp').value = '';
+    document.querySelectorAll('[id^="imp-pill-"]').forEach(b => b.classList.remove('active'));
+    document.getElementById('imp-pill-').classList.add('active');
+  }
+  applyFilters();
+}
+
+function setImpFilterRange(type, range) {
+  impFilterRange = range;
+  document.querySelectorAll('[id^="imp-pill-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById('imp-pill-' + range).classList.add('active');
+  applyFilters();
+}
+
+function setImpactFilter(val) {
+  impactFilter = ''; impactFilterRange = '';
+  document.querySelectorAll('[id^="impact-pill-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById('impact-pill-').classList.add('active');
+  applyFilters();
+}
+
+function setImpactFilterRange(range) {
+  impactFilterRange = range;
+  document.querySelectorAll('[id^="impact-pill-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById('impact-pill-' + range).classList.add('active');
+  applyFilters();
+}
+
+function matchesRange(val, range) {
+  const n = parseInt(val) || 5;
+  if (range === 'low')  return n <= 6;
+  if (range === 'mid')  return n >= 7 && n <= 8;
+  if (range === 'high') return n >= 9;
+  return true;
+}
+
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterResp').value = '';
+  document.getElementById('filterStatus').value = '';
+  document.getElementById('filterRec').value = '';
+  document.getElementById('filterImp').value = '';
+  statusFilter = '';
+  respFilter = '';
+  impFilter = ''; impFilterRange = '';
+  impactFilter = ''; impactFilterRange = '';
+  caracFilter = '';
+  renderRespPills();
+  setImpFilter('', '');
+  setImpactFilter('');
+  setCaracFilter('');
+  applyFilters();
+}
+
+// ── SORT ──
+// Parse date string to timestamp for sorting (closer dates first)
+function parseDateForSort(val) {
+  if (!val) return Infinity; // empty → last
+  // dd/mm/yyyy
+  const d1 = val.match(/^(\d{1,2})\/(\d{2})\/(\d{4})$/);
+  if (d1) return new Date(parseInt(d1[3]), parseInt(d1[2])-1, parseInt(d1[1])).getTime();
+  // Mês/yyyy
+  const MESES_MAP = {Janeiro:0,Fevereiro:1,'Março':2,Abril:3,Maio:4,Junho:5,
+                     Julho:6,Agosto:7,Setembro:8,Outubro:9,Novembro:10,Dezembro:11};
+  const d2 = val.match(/^(.+?)\/(\d{4})$/);
+  if (d2 && MESES_MAP[d2[1]] !== undefined) return new Date(parseInt(d2[2]), MESES_MAP[d2[1]], 1).getTime();
+  return Infinity;
+}
+
+function sortBy(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll('thead th').forEach(th => { th.classList.remove('sort-asc','sort-desc'); });
+  const idx = ['atividade','responsavel','importante','impactante','recorrencia','dataFinal','status'].indexOf(col);
+  if (idx>=0) {
+    const ths = document.querySelectorAll('thead th');
+    ths[idx+1].classList.add(sortDir===1?'sort-asc':'sort-desc');
+  }
+  applyFilters();
+}
+
+// ── EXEC RATIO BADGE (for table status cell on Recorrência) ──
+function execRatioBadge(d) {
+  const totalMeses = mesesDecorridos();
+  const done = d.execucao ? Object.values(d.execucao).filter(v => v === true).length : 0;
+  const color = done === 0 ? 'var(--red)' : done >= totalMeses ? 'var(--green)' : 'var(--orange)';
+  const bg    = done === 0 ? 'rgba(248,113,113,0.12)' : done >= totalMeses ? 'rgba(74,222,128,0.12)' : 'rgba(251,146,60,0.12)';
+  return `<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;background:${bg};color:${color};border:1px solid ${color}40">
+    ${done}<span style="opacity:0.5;font-weight:400">/</span>${totalMeses}
+  </span>`;
+}
+
+// ── TABLE ──
+function isDragEnabled() {
+  const search = document.getElementById('searchInput').value;
+  const resp   = document.getElementById('filterResp').value;
+  const status = document.getElementById('filterStatus').value;
+  const rec    = document.getElementById('filterRec').value;
+  const imp    = document.getElementById('filterImp').value;
+  return !search && !resp && !status && !rec && !imp && !statusFilter && sortCol === 'id';
+}
+
+const STATUS_OPTIONS_CONQUISTA = ['Não iniciado 🕑','Não pronto','Finalizado ✅','Atrasado ❌','Sem informação'];
+const STATUS_OPTIONS_RECORRENCIA = ['Não iniciado 🕑','Em andamento 🚀','Ocorrendo no prazo ✅','Finalizado ✅','Atrasado ❌','Não pronto','Sem informação'];
+const STATUS_OPTIONS = STATUS_OPTIONS_CONQUISTA; // default fallback
+const REC_OPTIONS    = ['Recorrência','Conquista'];
+
+function renderTable() {
+  if (filtered.length === 0) {
+    document.getElementById('tableBody').innerHTML = `<tr><td colspan="8"><div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">Nenhuma atividade encontrada</div></div></td></tr>`;
+    document.getElementById('resultInfo').textContent = '';
+    return;
+  }
+
+  const dragOk = isDragEnabled();
+  const tbody = document.getElementById('tableBody');
+
+  tbody.innerHTML = filtered.map(d => `
+    <tr data-id="${d.id}" draggable="${dragOk}" class="${d.retirada ? 'tr-retired' : ''}">
+      <td style="padding:0 8px;width:28px">
+        <span class="drag-handle" title="${dragOk?'Arraste para reordenar':'Limpe filtros para reordenar'}">⠿</span>
+      </td>
+
+      <td class="td-atividade td-clickable" onclick="openDetail(${d.id})">
+        <div class="td-atividade-text">${escHtml(d.atividade)}</div>
+        ${d.notes ? `<div class="td-notes">${escHtml(d.notes)}</div>` : ''}
+      </td>
+
+      <td style="text-align:center">
+        <div class="resp-cell" style="justify-content:center">
+          <div class="setor-tag" style="background:${getCor(d.responsavel)[0]}22;color:${getCor(d.responsavel)[0]};border:1px solid ${getCor(d.responsavel)[0]}44">${getSetor(d.responsavel)}</div>
+          <span class="resp-name">${escHtml(d.responsavel)}</span>
+        </div>
+      </td>
+
+      <td class="td-editable" onclick="openPopover(event,${d.id},'importante')" data-field="importante">
+        <span class="td-plain">${impBadge('importante', d.importante)}</span>
+      </td>
+
+      <td class="td-editable" onclick="openPopover(event,${d.id},'impactante')" data-field="impactante">
+        <span class="td-plain">${impBadge('impactante', d.impactante)}</span>
+      </td>
+
+      <td class="td-editable" onclick="openPopover(event,${d.id},'recorrencia')" data-field="recorrencia">
+        <span class="td-plain">${d.recorrencia === 'Recorrência' ? '🔄 Recorrência' : d.recorrencia === 'Conquista' ? '🏆 Conquista' : '—'}</span>
+      </td>
+
+      ${d.recorrencia === 'Recorrência'
+        ? `<td style="text-align:center;color:var(--text-dim);font-size:12px">—</td>`
+        : `<td class="td-editable" onclick="openPopover(event,${d.id},'dataFinal')" data-field="dataFinal">
+        <span class="td-plain">${d.dataFinal||'—'}</span>
+      </td>`
+      }
+
+      <td class="td-editable" data-field="status" data-id="${d.id}" data-rec="${d.recorrencia}" onclick="onStatusClick(event,this)" style="${d.recorrencia==='Recorrência' ? 'cursor:default' : ''}">
+        ${d.recorrencia === 'Recorrência' ? execRatioBadge(d) : statusBadge(d.status)}
+      </td>
+
+    </tr>`).join('');
+
+  if (dragOk) initDrag(tbody);
+
+  const info = dragOk
+    ? `${filtered.length} atividades — arraste ⠿ para reordenar`
+    : `${filtered.length} atividade${filtered.length!==1?'s':''} encontrada${filtered.length!==1?'s':''}`;
+  document.getElementById('resultInfo').textContent = info;
+}
+
+function onStatusClick(e, cell) {
+  const rec = cell.dataset.rec;
+  if (rec === 'Recorrência') return; // auto, not clickable
+  const id = parseInt(cell.dataset.id);
+  openPopover(e, id, 'status');
+}
+
+// ── POPOVER EDITOR ──
+let activePopover = null;
+
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MESES_NUM = {'Janeiro':'01','Fevereiro':'02','Março':'03','Abril':'04','Maio':'05','Junho':'06',
+                   'Julho':'07','Agosto':'08','Setembro':'09','Outubro':'10','Novembro':'11','Dezembro':'12'};
+
+// Parse date: "15/04/2026" or "Abril/2026" → {day, mes, mesNome, year}
+function parseDate(val) {
+  if (!val) return {day:'', mesNome:'', year:'2026'};
+  const ddmm = val.match(/^(\d{1,2})\/(\d{2})\/(\d{4})$/);
+  if (ddmm) {
+    const mesNome = Object.keys(MESES_NUM).find(k => MESES_NUM[k] === ddmm[2]) || '';
+    return {day: ddmm[1].padStart(2,'0'), mesNome, year: ddmm[3]};
+  }
+  const mmyyyy = val.match(/^(.+?)\/(\d{4})$/);
+  if (mmyyyy) return {day:'', mesNome: mmyyyy[1], year: mmyyyy[2]};
+  return {day:'', mesNome:'', year:'2026'};
+}
+
+function buildDate(day, mesNome, year) {
+  if (!mesNome) return '';
+  const mm = MESES_NUM[mesNome] || '01';
+  if (day) return `${day.padStart(2,'0')}/${mm}/${year}`;
+  return `${mesNome}/${year}`;
+}
+
+let popState = {}; // holds {day, mesNome, year} while popover is open
+
+function openPopover(e, id, field) {
+  e.stopPropagation();
+  closePopover();
+
+  const d = data.find(x => x.id === id);
+  if (!d) return;
+
+  const cell = e.currentTarget;
+  const rect = cell.getBoundingClientRect();
+
+  const pop = document.createElement('div');
+  pop.className = 'cell-popover';
+  pop.id = 'cellPopover';
+  pop.onclick = ev => ev.stopPropagation();
+
+  const isDate   = field === 'dataInicial' || field === 'dataFinal';
+  const isConquistaDate = isDate && d.recorrencia === 'Conquista';
+
+  if (isDate) {
+    const parsed = parseDate(d[field] || '');
+    popState = {...parsed};
+
+    if (isConquistaDate) {
+      // Full date picker: day selector + month grid
+      pop.innerHTML = buildDatePicker(id, field, parsed);
+    } else {
+      // Month-only picker for Recorrência
+      const current = d[field] || '';
+      pop.innerHTML = `<div class="month-picker">
+        ${MESES.map(m => {
+          const val = m + '/2026';
+          return `<button class="month-btn ${current===val?'month-active':''}"
+            onclick="quickSave(${id},'${field}','${val}');closePopover()">${m.slice(0,3)}</button>`;
+        }).join('')}
+        <button class="pop-clear-btn" onclick="quickSave(${id},'${field}','');closePopover()">✕ Limpar</button>
+      </div>`;
+    }
+  } else {
+    const statusOpts = d.recorrencia === 'Recorrência' ? STATUS_OPTIONS_RECORRENCIA : STATUS_OPTIONS_CONQUISTA;
+    const opts = field === 'status' ? statusOpts : field === 'recorrencia' ? REC_OPTIONS : (field === 'importante' || field === 'impactante') ? [1,2,3,4,5,6,7,8,9,10] : [];
+    if (field === 'importante' || field === 'impactante') pop.style.minWidth = '360px';
+    pop.innerHTML = opts.map(o => {
+      const isActive = (field === 'importante' || field === 'impactante')
+        ? parseInt(d[field]) === o
+        : d[field] === o;
+      const label = field === 'status' ? statusBadge(o)
+        : (field === 'importante' || field === 'impactante') ? impBadgeFull(field, o)
+        : o;
+      return `<div class="pop-option ${isActive?'pop-active':''}" onclick="quickSave(${id},'${field}',${JSON.stringify(o)});closePopover()">${label}</div>`;
+    }).join('');
+  }
+
+  document.body.appendChild(pop);
+  activePopover = pop;
+  // Defer so the document click listener (same event) doesn't close immediately
+  pop._justOpened = true;
+  setTimeout(() => { pop._justOpened = false; }, 0);
+
+  const scrollY = window.scrollY;
+  const scrollX = window.scrollX;
+  let top = rect.bottom + scrollY + 4;
+  let left = rect.left + scrollX;
+  if (left + 290 > window.innerWidth) left = window.innerWidth - 360;
+  pop.style.top  = top + 'px';
+  pop.style.left = left + 'px';
+}
+
+function buildDatePicker(id, field, parsed) {
+  const days = Array.from({length:31},(_,i)=>(i+1).toString().padStart(2,'0'));
+  const selDay = parsed.day || '';
+  const selMes = parsed.mesNome || '';
+
+  return `<div class="date-picker">
+    <div class="date-picker-label">Dia</div>
+    <div class="day-grid">
+      ${days.map(d => `<button class="day-btn ${selDay===d?'day-active':''}"
+        onclick="popSetDay('${d}',${id},'${field}')">${parseInt(d)}</button>`).join('')}
+    </div>
+    <div class="date-picker-label" style="margin-top:10px">Mês</div>
+    <div class="month-picker" style="padding:0;border:none;min-width:unset">
+      ${MESES.map(m => `<button class="month-btn ${selMes===m?'month-active':''}"
+        onclick="popSetMonth('${m}',${id},'${field}')">${m.slice(0,3)}</button>`).join('')}
+    </div>
+    <button class="pop-clear-btn" style="margin-top:8px;width:100%" onclick="quickSave(${id},'${field}','');closePopover()">✕ Limpar</button>
+  </div>`;
+}
+
+function popSetDay(day, id, field) {
+  popState.day = day;
+  popState.year = '2026';
+  // update button highlights
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.toggle('day-active', b.textContent.trim() === String(parseInt(day))));
+  maybeSaveDate(id, field);
+}
+
+function popSetMonth(mes, id, field) {
+  popState.mesNome = mes;
+  popState.year = '2026';
+  document.querySelectorAll('.month-btn').forEach(b => b.classList.toggle('month-active', b.textContent.trim() === mes.slice(0,3)));
+  maybeSaveDate(id, field);
+}
+
+function maybeSaveDate(id, field) {
+  if (popState.day && popState.mesNome) {
+    const val = buildDate(popState.day, popState.mesNome, popState.year);
+    quickSave(id, field, val);
+    // Don't close — let user confirm visually
+  }
+}
+
+function closePopover() {
+  if (activePopover) { activePopover.remove(); activePopover = null; }
+}
+
+document.addEventListener('click', (e) => {
+  if (activePopover && !activePopover._justOpened && !activePopover.contains(e.target)) closePopover();
+});
+
+// ── QUICK SAVE ──
+function quickSave(id, field, value) {
+  const d = data.find(x => x.id === id);
+  if (!d) return;
+  if (field === 'importante' || field === 'impactante') {
+    d[field] = parseInt(value) || 2;
+  } else {
+    d[field] = value;
+  }
+  save();
+
+  // When recorrencia changes, re-render entire table so status cell switches correctly
+  if (field === 'recorrencia') {
+    applyFilters();
+    renderStats();
+    renderDash();
+    return;
+  }
+
+  // Update cell in place without full re-render
+  const row = document.querySelector(`tr[data-id="${id}"]`);
+  if (row) {
+    const cell = row.querySelector(`td[data-field="${field}"]`);
+    if (cell) {
+      if (field === 'status')           cell.innerHTML = statusBadge(value);
+      else if (field === 'importante')  cell.innerHTML = `<span class="td-plain">${impBadge('importante', value)}</span>`;
+      else if (field === 'impactante')  cell.innerHTML = `<span class="td-plain">${impBadge('impactante', value)}</span>`;
+      else if (field === 'dataFinal')   cell.innerHTML = `<span class="td-plain">${value||'—'}</span>`;
+      // don't override onclick for status (uses onStatusClick via attribute)
+      if (field !== 'status') cell.onclick = (ev) => openPopover(ev, id, field);
+    }
+  }
+  renderStats();
+  renderDash();
+}
+
+function cycleProgress(id) {
+  const d = data.find(x => x.id === id);
+  if (!d) return;
+  const steps = [0,25,50,75,100];
+  const cur = steps.indexOf(d.progresso);
+  d.progresso = steps[(cur + 1) % steps.length];
+  save();
+  const fill = document.getElementById('pf-'+id);
+  const pct  = document.getElementById('pp-'+id);
+  if (fill) { fill.style.width = d.progresso+'%'; fill.style.background = progColor(d.progresso); }
+  if (pct)  pct.textContent = d.progresso+'%';
+  renderStats(); renderDash();
+}
+
+// ── DRAG & DROP ──
+let dragSrcId = null;
+
+function initDrag(tbody) {
+  let dragSrcEl = null;
+
+  tbody.querySelectorAll('tr[draggable]').forEach(row => {
+    row.addEventListener('dragstart', e => {
+      dragSrcEl = row;
+      dragSrcId = parseInt(row.dataset.id);
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', dragSrcId);
+    });
+
+    row.addEventListener('dragend', () => {
+      row.classList.remove('dragging');
+      tbody.querySelectorAll('tr').forEach(r => r.classList.remove('drag-over'));
+    });
+
+    row.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (row !== dragSrcEl) {
+        tbody.querySelectorAll('tr').forEach(r => r.classList.remove('drag-over'));
+        row.classList.add('drag-over');
+      }
+    });
+
+    row.addEventListener('dragleave', () => {
+      row.classList.remove('drag-over');
+    });
+
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      row.classList.remove('drag-over');
+      if (!dragSrcEl || row === dragSrcEl) return;
+
+      const targetId = parseInt(row.dataset.id);
+      const srcIdx = data.findIndex(d => d.id === dragSrcId);
+      const tgtIdx = data.findIndex(d => d.id === targetId);
+      if (srcIdx < 0 || tgtIdx < 0) return;
+
+      // Move srcIdx to tgtIdx in data array
+      const [moved] = data.splice(srcIdx, 1);
+      data.splice(tgtIdx, 0, moved);
+
+      // Reassign display order
+      save();
+      applyFilters();
+      toast('↕ Ordem salva!');
+    });
+  });
+}
+
+function setModalCarac(val) {
+  document.getElementById('modalRec').value = val;
+  syncCaracButtons(val);
+  const d = data.find(x => x.id === activeId) || {};
+  updateSmartChecks();
+  renderExecMensal({...d, recorrencia: val});
+}
+
+function syncCaracButtons(val) {
+  const bRec = document.getElementById('btnRec');
+  const bCon = document.getElementById('btnCon');
+  if (!bRec || !bCon) return;
+  bRec.className = 'carac-btn' + (val === 'Recorrência' ? ' carac-active-rec' : '');
+  bCon.className = 'carac-btn' + (val === 'Conquista'   ? ' carac-active-con' : '');
+}
+
+const DIFICULDADE_LABELS = ['','Muito fácil','Fácil','Médio','Difícil','Muito difícil'];
+
+function setDificuldade(val) {
+  const d = data.find(x => x.id === activeId);
+  if (d) d.dificuldade = val;
+  renderStars(val);
+}
+
+function renderStars(val) {
+  const stars = document.querySelectorAll('#starRating .star');
+  stars.forEach(s => {
+    const n = parseInt(s.dataset.val);
+    s.classList.toggle('active', n <= val);
+  });
+  const label = document.getElementById('starLabel');
+  if (label) label.textContent = val ? DIFICULDADE_LABELS[val] : '';
+  // hover effect
+  stars.forEach(s => {
+    s.onmouseenter = () => {
+      const hv = parseInt(s.dataset.val);
+      stars.forEach(st => st.classList.toggle('hover', parseInt(st.dataset.val) <= hv));
+    };
+    s.onmouseleave = () => stars.forEach(st => st.classList.remove('hover'));
+  });
+}
+
+function pickImp(selectId, displayId, type, n) {
+  document.getElementById(selectId).value = String(n);
+  renderImpDisplay(displayId, type, n);
+  updateSmartChecks();
+}
+
+function renderImpDisplay(displayId, type, n) {
+  const el = document.getElementById(displayId);
+  if (el) el.innerHTML = impBadgeFull(type, n);
+  const container = el ? el.parentElement : null;
+  if (container) {
+    container.querySelectorAll('.imp-picker-btn').forEach(btn => {
+      btn.className = 'imp-picker-btn';
+      if (parseInt(btn.dataset.n) === parseInt(n)) btn.classList.add('picked-' + n);
+    });
+  }
+}
+
+// ── DETAIL MODAL ──
+function openDetail(id) {
+  activeId = id;
+  const d = data.find(x=>x.id===id);
+  if (!d) return;
+
+  document.getElementById('modalTitle').value = d.atividade;
+  // Auto-resize to show full text - use setTimeout to run after modal is visible
+  const titleEl = document.getElementById('modalTitle');
+  titleEl.oninput = () => { titleEl.style.height = 'auto'; titleEl.style.height = titleEl.scrollHeight + 'px'; };
+  setTimeout(() => { titleEl.style.height = 'auto'; titleEl.style.height = titleEl.scrollHeight + 'px'; }, 10);
+  document.getElementById('modalDesc').value = d.descricao || '';
+  document.getElementById('modalNotes').value = d.notes || '';
+  document.getElementById('modalResp').value = d.responsavel;
+  document.getElementById('modalStatus').value = d.status || '';
+  document.getElementById('modalRec').value = d.recorrencia || '';
+  syncCaracButtons(d.recorrencia || '');
+  updateDiasRestantes();
+  renderMarcos(d.marcos || []);
+  document.getElementById('modalImp').value = String(d.importante || 2);
+  document.getElementById('modalImpact').value = String(d.impactante || 2);
+  renderImpDisplay('modalImpDisplay', 'importante', d.importante || 2);
+  renderImpDisplay('modalImpactDisplay', 'impactante', d.impactante || 2);
+  renderStars(d.dificuldade || 0);
+  const retireBtn = document.querySelector('.btn-retire');
+  if (retireBtn) retireBtn.textContent = d.retirada ? '↩ Restaurar' : '⊘ Retirar';
+  document.getElementById('modalDI').value = d.dataInicial || '';
+  document.getElementById('modalDF').value = d.dataFinal || '';
+  document.getElementById('modalProgRange').value = d.progresso;
+  updateProgSlider(d.progresso);
+  updateSmartChecks();
+  renderExecMensal(d);
+
+  // clear focused
+  document.querySelectorAll('.smart-section').forEach(s=>s.classList.remove('focused'));
+  document.querySelectorAll('.smart-letter-card').forEach(c=>c.classList.remove('lit'));
+
+  document.getElementById('detailModal').classList.add('open');
+}
+
+const MESES_EXEC = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+// Returns how many months have elapsed so far this year (from Jan=1, counting from day 1)
+function mesesDecorridos() {
+  return new Date().getMonth() + 1; // getMonth() is 0-based, so +1 = current month included
+}
+
+function renderExecMensal(d) {
+  const isRecorrencia = d.recorrencia === 'Recorrência';
+
+  // Toggle M block sub-sections
+  const mCon = document.getElementById('mConquistaFields');
+  const mRec = document.getElementById('mRecorrenciaFields');
+  const statusField = document.getElementById('statusSelectField');
+  const ratioDisplay = document.getElementById('execRatioDisplay');  // T block
+
+  if (mCon) mCon.style.display = isRecorrencia ? 'none' : 'block';
+  if (mRec) mRec.style.display = isRecorrencia ? 'block' : 'none';
+  if (statusField)  statusField.style.display  = isRecorrencia ? 'none' : 'block';
+  if (ratioDisplay) ratioDisplay.style.display = isRecorrencia ? 'block' : 'none';
+  const tDate = document.getElementById('tConquistaDate');
+  if (tDate) tDate.style.display = isRecorrencia ? 'none' : 'block';
+  const sectionT = document.getElementById('section-t');
+  if (sectionT) {
+    sectionT.style.display = ''; // always visible
+    document.getElementById('section-r').style.gridColumn = 'span 2';
+  }
+
+  if (!isRecorrencia) return;
+  if (!d.id) return;
+
+  if (!d.execucao) d.execucao = {};
+
+  const totalMeses = mesesDecorridos();
+  const done = MESES_EXEC.filter(m => d.execucao[m] === true).length;
+  const pct  = totalMeses > 0 ? Math.round((done / totalMeses) * 100) : 0;
+  const color = done === 0 ? 'var(--red)' : done >= totalMeses ? 'var(--green)' : 'var(--orange)';
+
+  // Update T block ratio
+  const rv = document.getElementById('execRatioValue');
+  const rf = document.getElementById('execRatioFill');
+  const rs = document.getElementById('execRatioSub');
+  if (rv) rv.innerHTML = `<span style="color:${color}">${done}</span><span style="opacity:0.5;font-weight:400;font-size:20px"> / ${totalMeses}</span>`;
+  if (rf) { rf.style.width = pct + '%'; rf.style.background = color; }
+  if (rs) rs.textContent = `${pct}% dos ${totalMeses} meses decorridos em 2026`;
+
+  // Update M block inline ratio
+  const rvm = document.getElementById('execRatioValueM');
+  const rfm = document.getElementById('execRatioFillM');
+  const rsm = document.getElementById('execRatioSubM');
+  if (rvm) rvm.innerHTML = `<span style="color:${color}">${done}</span><span style="opacity:0.5;font-weight:400;font-size:20px"> / ${totalMeses}</span>`;
+  if (rfm) { rfm.style.width = pct + '%'; rfm.style.background = color; }
+  if (rsm) rsm.textContent = `${pct}% dos ${totalMeses} meses decorridos em 2026`;
+
+  // Render exec grid
+  const grid = document.getElementById('execGrid');
+  if (!grid) return;
+
+  grid.innerHTML = MESES_EXEC.map((m, idx) => {
+    const mesIdx = idx + 1; // 1=Jan ... 12=Dez
+    const isPast = mesIdx <= totalMeses;
+    const isFuture = mesIdx > totalMeses;
+    const state = d.execucao[m]; // true=feito, false/undefined=não feito/não marcado
+    const isDone  = state === true;
+    const isNope  = state === false && isPast; // explicitly marked as não feito
+
+    let cls = 'exec-month';
+    if (isFuture) cls += ' exec-locked';
+    else if (isDone) cls += ' exec-done';
+    else if (isNope) cls += ' exec-nope';
+
+    const icon = isFuture ? '·' : isDone ? '✓' : isNope ? '✗' : '○';
+    const clickFn = isFuture ? '' : `onclick="toggleExecState(${d.id},'${m}')"`;
+
+    return `<div class="${cls}" ${clickFn} title="${isFuture ? 'Mês futuro' : ''}">
+      <div class="exec-month-name">${m}</div>
+      <div class="exec-check">${icon}</div>
+    </div>`;
+  }).join('') +
+  `<div class="exec-summary" style="grid-column:1/-1"><strong>${done}</strong> de ${totalMeses} meses executados · <strong>${Math.round(done/totalMeses*100)||0}%</strong> do ano</div>`;
+}
+
+function toggleExecState(id, mes) {
+  const d = data.find(x => x.id === id);
+  if (!d) return;
+  if (!d.execucao) d.execucao = {};
+  const cur = d.execucao[mes];
+  // Cycle: undefined/null → true (✓) → false (✗) → undefined (○)
+  if (cur === undefined || cur === null) d.execucao[mes] = true;
+  else if (cur === true) d.execucao[mes] = false;
+  else d.execucao[mes] = undefined;
+  save();
+  renderExecMensal(d);
+  updateSmartChecks();
+}
+
+// keep old toggleExec for compat
+function toggleExec(id, mes) { toggleExecState(id, mes); }
+
+function focusSmart(letter) {
+  // highlight card
+  document.querySelectorAll('.smart-letter-card').forEach(c=>c.classList.remove('lit'));
+  document.getElementById('smart-'+letter).classList.add('lit');
+  // focus relevant input
+  const map = { s: 'modalDesc', m: 'modalDI', a: 'modalResp', r: 'modalImp', t: 'modalStatus' };
+  const el = document.getElementById(map[letter]);
+  if (el) { el.focus(); el.scrollIntoView({behavior:'smooth', block:'center'}); }
+}
+
+function updateSmartChecks() {
+  const desc = (document.getElementById('modalDesc').value||'').trim();
+  const di   = (document.getElementById('modalDI').value||'').trim();
+  const df   = (document.getElementById('modalDF').value||'').trim();
+  const rec  = (document.getElementById('modalRec').value||'').trim();
+  const imp  = (document.getElementById('modalImp').value||'').trim();
+  const impact = (document.getElementById('modalImpact').value||'').trim();
+  const resp = (document.getElementById('modalResp').value||'').trim();
+  const stat = (document.getElementById('modalStatus').value||'').trim();
+
+  const checks = {
+    s: desc.length >= 20,
+    m: (di||'').length > 0 || (df||'').length > 0 || rec.length > 0,
+    a: imp.length > 0 && impact.length > 0,
+    r: resp.length > 0,
+    t: rec === 'Recorrência'
+      ? (() => { const d = data.find(x=>x.id===activeId); return d && d.execucao && Object.values(d.execucao).some(Boolean); })()
+      : stat.length > 0 && stat !== 'Sem informação',
+  };
+  // For Recorrência, M also checks if at least one month is executed
+  if (rec === 'Recorrência') {
+    const d = data.find(x=>x.id===activeId);
+    const execDone = d && d.execucao ? Object.values(d.execucao).filter(Boolean).length : 0;
+    checks.m = checks.m && execDone > 0;
+  }
+
+  let score = 0;
+  Object.entries(checks).forEach(([k, ok]) => {
+    const card = document.getElementById('smart-'+k);
+    const check = document.getElementById('check-'+k);
+    if (ok) {
+      card.classList.add('checked');
+      check.textContent = '✓';
+      score++;
+    } else {
+      card.classList.remove('checked');
+      check.textContent = '○';
+    }
+  });
+
+  const pct = Math.round((score/5)*100);
+  document.getElementById('smartScoreFill').style.width = pct + '%';
+  document.getElementById('smartScorePct').textContent = pct + '%';
+}
+
+function updateProgSlider(v) {
+  v = parseInt(v);
+  const pct  = document.getElementById('modalProgPct');
+  const fill = document.getElementById('modalProgFill');
+  if (pct)  pct.textContent = v + '%';
+  if (fill) { fill.style.width = v + '%'; fill.style.background = progColor(v); }
+}
+
+function saveActivity() {
+  const d = data.find(x=>x.id===activeId);
+  if (!d) return;
+  const novoTitulo = document.getElementById('modalTitle').value.trim();
+  if (novoTitulo) d.atividade = novoTitulo;
+  d.descricao = document.getElementById('modalDesc').value;
+  d.notes = document.getElementById('modalNotes').value;
+  d.responsavel = document.getElementById('modalResp').value;
+  d.status = document.getElementById('modalStatus').value;
+  d.recorrencia = document.getElementById('modalRec').value;
+  d.importante = parseInt(document.getElementById('modalImp').value) || 2;
+  d.impactante = parseInt(document.getElementById('modalImpact').value) || 2;
+  // dificuldade is saved immediately via setDificuldade, no extra action needed
+  d.dataInicial = document.getElementById('modalDI').value;
+  d.dataFinal = document.getElementById('modalDF').value;
+  d.progresso = parseInt(document.getElementById('modalProgRange').value);
+  save();
+  closeModal('detailModal');
+  applyFilters();
+  renderStats();
+  renderDash();
+  toast('✅ Atividade salva!');
+}
+
+// ── MARCOS DA META ──
+const MARCO_STATUS = ['Não iniciado 🕑','Não pronto','Em andamento 🚀','Finalizado ✅','Atrasado ❌'];
+const MARCO_DIFIC  = ['','Muito fácil','Fácil','Médio','Difícil','Muito difícil'];
+
+function impColorForN(n) {
+  n = parseInt(n)||0;
+  if (n <= 6) return '#facc15';
+  if (n <= 8) return 'var(--orange)';
+  return 'var(--red)';
+}
+
+function renderMarcos(marcos) {
+  const container = document.getElementById('marcosContainer');
+  if (!container) return;
+  marcos = marcos || [];
+
+  // Hide/show global A·R·T blocks based on whether marcos exist
+  const artRow = document.querySelector('.smart-art-row');
+  if (artRow) artRow.style.display = marcos.length > 0 ? 'none' : '';
+
+  if (marcos.length === 0) {
+    container.innerHTML = `<div style="font-size:12px;color:var(--text-dim);padding:4px 0">Nenhum marco definido. Clique em "+ Marco" para adicionar.</div>`;
+    return;
+  }
+
+  container.innerHTML = marcos.map((m, i) => {
+    const statusBg = m.status === 'Finalizado ✅' ? 'marco-done-card' : m.status === 'Atrasado ❌' ? 'marco-nope-card' : '';
+    const stars = [1,2,3,4,5].map(n =>
+      `<span class="marco-star ${(m.dificuldade||0)>=n?'lit':''}" onclick="setMarcoDific(${i},${n})">${'★'}</span>`
+    ).join('');
+    const impBtns = [1,2,3,4,5,6,7,8,9,10].map(n => {
+      const c = n<=6?'#facc15':n<=8?'var(--orange)':'var(--red)';
+      const active = parseInt(m.relevancia||0)===n;
+      return `<button class="marco-imp-btn" style="${active?`border-color:${c};background:${c}20;color:${c}`:''}" onclick="setMarcoRel(${i},${n})">${n}</button>`;
+    }).join('');
+    const statusOpts = MARCO_STATUS.map(s =>
+      `<option ${m.status===s?'selected':''}>${s}</option>`
+    ).join('');
+
+    return `<div class="marco-card ${statusBg}" id="marco-card-${i}">
+      <div class="marco-card-header">
+        <div class="marco-num">${i+1}</div>
+        <input class="marco-title-input" placeholder="Descreva este marco..." value="${escHtml(m.label||'')}"
+          oninput="updateMarco(${i},'label',this.value)">
+        <button class="marco-del" onclick="deleteMarco(${i})">✕</button>
+      </div>
+      <div class="marco-fields">
+        <div>
+          <div class="marco-field-label">Dificuldade</div>
+          <div class="marco-stars">${stars}</div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:3px;text-align:center;min-height:12px">${MARCO_DIFIC[m.dificuldade||0]}</div>
+        </div>
+        <div>
+          <div class="marco-field-label">Relevância (1–10)</div>
+          <div class="marco-imp-btns">${impBtns}</div>
+        </div>
+        <div>
+          <div class="marco-field-label">Status</div>
+          <select class="marco-status-sel" onchange="setMarcoStatus(${i},this.value)">
+            ${statusOpts}
+          </select>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addMarco() {
+  const d = data.find(x => x.id === activeId);
+  if (!d) return;
+  if (!d.marcos) d.marcos = [];
+  d.marcos.push({ label: '', dificuldade: 0, relevancia: 0, status: 'Não iniciado 🕑', done: false });
+  renderMarcos(d.marcos);
+}
+
+function updateMarco(idx, field, val) {
+  const d = data.find(x => x.id === activeId);
+  if (!d || !d.marcos || !d.marcos[idx]) return;
+  d.marcos[idx][field] = val;
+}
+
+function setMarcoDific(idx, n) {
+  const d = data.find(x => x.id === activeId);
+  if (!d || !d.marcos || !d.marcos[idx]) return;
+  d.marcos[idx].dificuldade = d.marcos[idx].dificuldade === n ? 0 : n;
+  renderMarcos(d.marcos);
+}
+
+function setMarcoRel(idx, n) {
+  const d = data.find(x => x.id === activeId);
+  if (!d || !d.marcos || !d.marcos[idx]) return;
+  d.marcos[idx].relevancia = d.marcos[idx].relevancia === n ? 0 : n;
+  renderMarcos(d.marcos);
+}
+
+function setMarcoStatus(idx, val) {
+  const d = data.find(x => x.id === activeId);
+  if (!d || !d.marcos || !d.marcos[idx]) return;
+  d.marcos[idx].status = val;
+  d.marcos[idx].done = val === 'Finalizado ✅';
+  renderMarcos(d.marcos);
+}
+
+function toggleMarco(idx) {
+  const d = data.find(x => x.id === activeId);
+  if (!d || !d.marcos || !d.marcos[idx]) return;
+  d.marcos[idx].done = !d.marcos[idx].done;
+  d.marcos[idx].status = d.marcos[idx].done ? 'Finalizado ✅' : 'Não iniciado 🕑';
+  renderMarcos(d.marcos);
+}
+
+function deleteMarco(idx) {
+  const d = data.find(x => x.id === activeId);
+  if (!d || !d.marcos) return;
+  d.marcos.splice(idx, 1);
+  renderMarcos(d.marcos);
+}
+
+function updateDiasRestantes() {
+  const el = document.getElementById('diasRestantes');
+  if (!el) return;
+  const val = (document.getElementById('modalDF').value || '').trim();
+  if (!val) { el.textContent = ''; return; }
+
+  // Parse dd/mm/yyyy
+  const m = val.match(/^(\d{1,2})\/(\d{2})\/(\d{4})$/);
+  if (!m) { el.textContent = ''; return; }
+
+  const prazo = new Date(parseInt(m[3]), parseInt(m[2]) - 1, parseInt(m[1]));
+  const hoje  = new Date();
+  hoje.setHours(0, 0, 0, 0);
+  prazo.setHours(0, 0, 0, 0);
+
+  const diff = Math.round((prazo - hoje) / (1000 * 60 * 60 * 24));
+
+  let texto, color;
+  if (diff < 0) {
+    texto = `${Math.abs(diff)} dia${Math.abs(diff)!==1?'s':''} atrás`;
+    color = 'var(--red)';
+  } else if (diff === 0) {
+    texto = 'Vence hoje!';
+    color = 'var(--orange)';
+  } else {
+    texto = `${diff} dia${diff!==1?'s':''} restante${diff!==1?'s':''}`;
+    color = diff <= 7 ? 'var(--orange)' : diff <= 30 ? '#facc15' : 'var(--green)';
+  }
+
+  el.innerHTML = `<span style="color:${color}">${texto}</span>`;
+}
+
+function retireActivity() {
+  const d = data.find(x => x.id === activeId);
+  if (!d) return;
+  d.retirada = !d.retirada; // toggle: can un-retire
+  save();
+  closeModal('detailModal');
+  applyFilters();
+  renderStats();
+  renderDash();
+  toast(d.retirada ? '⊘ Atividade retirada' : '↩ Atividade restaurada');
+}
+
+function deleteActivity() {
+  data = data.filter(x => x.id !== activeId);
+  save();
+  closeModal('detailModal');
+  renderRespPills();
+  applyFilters();
+  renderStats();
+  renderDash();
+  toast('🗑 Atividade excluída');
+}
+
+// ── ADD MODAL ──
+function openAddModal() {
+  document.getElementById('addAtividade').value = '';
+  document.getElementById('addDesc').value = '';
+  document.getElementById('addResp').selectedIndex = 0;
+  document.getElementById('addStatus').selectedIndex = 0;
+  document.getElementById('addRec').selectedIndex = 0;
+  document.getElementById('addImp').selectedIndex = 1;
+  document.getElementById('addImpact').selectedIndex = 1;
+  document.getElementById('addDI').value = '';
+  document.getElementById('addDF').value = '';
+  document.getElementById('addModal').classList.add('open');
+}
+
+function confirmAdd() {
+  const atv = document.getElementById('addAtividade').value.trim();
+  const resp = document.getElementById('addResp').value;
+  if (!atv) { alert('Digite a atividade'); return; }
+  const maxId = data.reduce((m,d)=>Math.max(m,d.id),0);
+  const newItem = {
+    id: maxId+1,
+    atividade: atv,
+    descricao: document.getElementById('addDesc').value,
+    notes: '',
+    responsavel: resp,
+    status: document.getElementById('addStatus').value,
+    recorrencia: document.getElementById('addRec').value,
+    importante: parseInt(document.getElementById('addImp').value) || 2,
+      impactante: parseInt(document.getElementById('addImpact').value) || 2,
+    dataInicial: document.getElementById('addDI').value,
+    dataFinal: document.getElementById('addDF').value,
+    progresso: 0
+  };
+  data.push(newItem);
+  save();
+  closeModal('addModal');
+  populateSelects();
+  renderRespPills();
+  applyFilters();
+  renderStats();
+  renderDash();
+  toast('➕ Atividade adicionada!');
+}
+
+// ── DASHBOARD ──
+function renderDash() {
+  const resps = [...new Set(data.map(d=>d.responsavel))].filter(Boolean).sort();
+  document.getElementById('dashGrid').innerHTML = resps.map(resp => {
+    const acts = data.filter(d=>d.responsavel===resp);
+    const fin = acts.filter(d=>d.status&&d.status.includes('Finalizado')).length;
+    const and = acts.filter(d=>d.status&&(d.status.includes('andamento')||d.status.includes('Ocorrendo'))).length;
+    const atr = acts.filter(d=>d.status&&d.status.includes('Atrasado')).length;
+    const ni  = acts.filter(d=>d.status&&d.status.includes('Não iniciado')).length;
+    const avgProg = acts.length ? Math.round(acts.reduce((s,d)=>s+d.progresso,0)/acts.length) : 0;
+    const col = getCor(resp);
+    return `
+      <div class="person-card" onclick="filterAndGo('${resp}')">
+        <div class="person-header">
+          <div class="person-avatar" style="background:${col[0]};color:${col[1]}">${getSetor(resp)}</div>
+          <div>
+            <div class="person-name">${resp}</div>
+            <div class="person-count">${acts.length} atividades</div>
+          </div>
+        </div>
+        <div class="person-overall-prog">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span style="font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Progresso Geral</span>
+            <span style="font-size:16px;font-family:'DM Serif Display',serif;color:${col[0]}">${avgProg}%</span>
+          </div>
+          <div class="person-overall-bar">
+            <div class="person-overall-fill" style="width:${avgProg}%;background:${col[0]}"></div>
+          </div>
+        </div>
+        <div class="person-stats">
+          <div class="person-stat">
+            <div class="person-stat-val" style="color:var(--green)">${fin}</div>
+            <div class="person-stat-lbl">Concl.</div>
+          </div>
+          <div class="person-stat">
+            <div class="person-stat-val" style="color:var(--blue)">${and}</div>
+            <div class="person-stat-lbl">Ativo</div>
+          </div>
+          <div class="person-stat">
+            <div class="person-stat-val" style="color:var(--orange)">${ni}</div>
+            <div class="person-stat-lbl">Pendente</div>
+          </div>
+          <div class="person-stat">
+            <div class="person-stat-val" style="color:var(--red)">${atr}</div>
+            <div class="person-stat-lbl">Atrasado</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterAndGo(resp) {
+  switchTab('lista');
+  setRespFilter(resp);
+}
+
+// ── TABS ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{
+    if (t.textContent.toLowerCase().includes(tab==='lista'?'lista':'dash')) t.classList.add('active');
+  });
+}
+
+// ── MODALS ──
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));
+});
+
+// ── EXPORT ──
+function resetData() {
+  if (!confirm('Isso vai recarregar todos os dados originais e apagar edições salvas localmente. Continuar?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  data = JSON.parse(JSON.stringify(RAW));
+  populateSelects();
+  renderRespPills();
+  applyFilters();
+  renderStats();
+  renderDash();
+  toast('✅ Dados recarregados!');
+}
+
+function exportCSV() {
+  const cols = ['ID','Atividade','Responsável','Status','Importante','Impactante','Característica','Data Inicial','Data Final','Notas','Descrição'];
+  const rows = data.map(d=>[d.id, d.atividade, d.responsavel, d.status, d.importante, d.impactante, d.recorrencia, d.dataInicial, d.dataFinal, d.notes, d.descricao].map(v=>'"'+(v||'').replace(/"/g,'""')+'"').join(','));
+  const csv = [cols.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = 'zabaleta_plano_acao_2026.csv';
+  a.click();
+  toast('📥 CSV exportado!');
+}
+
+// ── TOAST ──
+function toast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 2500);
+}
+
+// ── UTILS ──
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── OBJETIVOS ESTRATÉGICOS ──
+const OBJ_KEY = 'zabaleta_objetivos_2026';
+
+function loadObjetivos() {
+  try {
+    const s = localStorage.getItem(OBJ_KEY);
+    return s ? JSON.parse(s) : {};
+  } catch(e) { return {}; }
+}
+
+function saveObjetivos(obj) {
+  try { localStorage.setItem(OBJ_KEY, JSON.stringify(obj)); } catch(e) {}
+}
+
+function initObjetivos() {
+  const obj = loadObjetivos();
+  ['o1','o2','o3','o4','o5'].forEach(id => {
+    if (obj[id]) {
+      const pct = obj[id].progresso || 0;
+      const status = obj[id].status || '';
+      const fill = document.getElementById('pf-' + id);
+      const range = document.getElementById('pr-' + id);
+      const pctEl = document.getElementById('pp-' + id);
+      const sel = document.querySelector(`[data-id="${id}"] .obj-goal-status`);
+      if (fill) fill.style.width = pct + '%';
+      if (range) range.value = pct;
+      if (pctEl) pctEl.textContent = pct + '%';
+      if (sel && status) sel.value = status;
+    }
+  });
+}
+
+function updateObjProg(id, val) {
+  val = parseInt(val);
+  const fill = document.getElementById('pf-' + id);
+  const pctEl = document.getElementById('pp-' + id);
+  if (fill) { fill.style.width = val + '%'; fill.style.background = val >= 100 ? 'var(--green)' : val >= 50 ? 'var(--orange)' : 'var(--gold)'; }
+  if (pctEl) pctEl.textContent = val + '%';
+  const obj = loadObjetivos();
+  if (!obj[id]) obj[id] = {};
+  obj[id].progresso = val;
+  saveObjetivos(obj);
+}
+
+function saveObjStatus(id, status) {
+  const obj = loadObjetivos();
+  if (!obj[id]) obj[id] = {};
+  obj[id].status = status;
+  saveObjetivos(obj);
+}
+
+// ── SIDEBAR TOGGLE ──
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('contentArea');
+  const btn = sidebar.querySelector('.sidebar-toggle');
+  const collapsed = sidebar.classList.toggle('collapsed');
+  content.classList.toggle('collapsed', collapsed);
+  btn.textContent = collapsed ? '›' : '‹';
+  btn.title = collapsed ? 'Expandir' : 'Minimizar';
+}
+
+// ── INIT ──
+load();
+populateSelects();
+renderRespPills();
+applyFilters();
+renderStats();
+renderDash();
+initObjetivos();
+initMarketing();
+
+
+// ── MARKETING ──
+
+</script>
+</body>
+</html>
