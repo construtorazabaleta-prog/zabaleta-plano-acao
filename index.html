@@ -5,6 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zabaleta — Plano de Ação 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBYqHf8bHbD8ElREv3TmvhPcCI3xZAuxiM",
+    authDomain: "zabaleta-tower.firebaseapp.com",
+    projectId: "zabaleta-tower",
+    storageBucket: "zabaleta-tower.firebasestorage.app",
+    messagingSenderId: "431466789862",
+    appId: "1:431466789862:web:2aedf25870c1d9c1563427"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Expõe funções Firebase globalmente para o script principal
+  window._fbLoad = async function(key) {
+    try {
+      const snap = await getDoc(doc(db, 'plano_acao_2026', key));
+      return snap.exists() ? snap.data().value : null;
+    } catch(e) { console.error('Firebase load error:', e); return null; }
+  };
+
+  window._fbSave = async function(key, value) {
+    try {
+      await setDoc(doc(db, 'plano_acao_2026', key), { value });
+    } catch(e) { console.error('Firebase save error:', e); }
+  };
+
+  window._firebaseReady = true;
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
 <style>
   :root {
     --bg: #0d0f14;
@@ -1837,38 +1870,50 @@ let activeId = null;
 let statusFilter = '';
 let respFilter = '';
 
-function load() {
-  try {
-    const s = localStorage.getItem(STORAGE_KEY);
-    data = s ? JSON.parse(s) : JSON.parse(JSON.stringify(RAW));
-  } catch(e) { data = JSON.parse(JSON.stringify(RAW)); }
-  // Migration: replace old 'Ocorrendo no prazo' status with 'Não pronto'
+function applyMigrations() {
   let migrated = false;
   data.forEach(d => {
-    if ((d.status || '').includes('Ocorrendo')) {
-      d.status = 'Não pronto';
-      migrated = true;
-    }
-    // Migration: classify unclassified Marthina activities as Conquista
-    if (d.responsavel === 'Marthina' && !['Recorrência','Conquista'].includes(d.recorrencia)) {
-      d.recorrencia = 'Conquista';
-      migrated = true;
-    }
-    // Migration: classify unclassified Mariana (Pessoas) activities as Recorrência
-    if (d.responsavel === 'Mariana' && !['Recorrência','Conquista'].includes(d.recorrencia)) {
-      d.recorrencia = 'Recorrência';
-      migrated = true;
-    }
-    // Migration: classify all Christian (Operações) activities as Conquista
-    if (d.responsavel === 'Christian') {
-      d.recorrencia = 'Conquista';
-      migrated = true;
-    }
+    if ((d.status || '').includes('Ocorrendo')) { d.status = 'Não pronto'; migrated = true; }
+    if (d.responsavel === 'Marthina' && !['Recorrência','Conquista'].includes(d.recorrencia)) { d.recorrencia = 'Conquista'; migrated = true; }
+    if (d.responsavel === 'Mariana' && !['Recorrência','Conquista'].includes(d.recorrencia)) { d.recorrencia = 'Recorrência'; migrated = true; }
+    if (d.responsavel === 'Christian') { d.recorrencia = 'Conquista'; migrated = true; }
   });
-  if (migrated) save();
+  return migrated;
 }
+
+function load() {
+  // Inicia com dados RAW; carrega do Firebase de forma assíncrona
+  data = JSON.parse(JSON.stringify(RAW));
+  applyMigrations();
+
+  const doLoad = async () => {
+    if (!window._fbLoad) return;
+    const s = await window._fbLoad(STORAGE_KEY);
+    if (s) {
+      try {
+        data = typeof s === 'string' ? JSON.parse(s) : s;
+        const migrated = applyMigrations();
+        if (migrated) save();
+        populateSelects();
+        renderRespPills();
+        applyFilters();
+        renderStats();
+        renderDash();
+      } catch(e) {}
+    }
+  };
+
+  if (window._firebaseReady) {
+    doLoad();
+  } else {
+    window.addEventListener('firebase-ready', doLoad, { once: true });
+  }
+}
+
 function save() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e){}
+  if (window._fbSave) {
+    window._fbSave(STORAGE_KEY, data);
+  }
 }
 
 // ── STATUS HELPERS ──
@@ -3094,9 +3139,9 @@ document.addEventListener('keydown', e => {
 
 // ── EXPORT ──
 function resetData() {
-  if (!confirm('Isso vai recarregar todos os dados originais e apagar edições salvas localmente. Continuar?')) return;
-  localStorage.removeItem(STORAGE_KEY);
+  if (!confirm('Isso vai recarregar todos os dados originais e apagar edições salvas. Continuar?')) return;
   data = JSON.parse(JSON.stringify(RAW));
+  if (window._fbSave) window._fbSave(STORAGE_KEY, data);
   populateSelects();
   renderRespPills();
   applyFilters();
@@ -3133,33 +3178,55 @@ function escHtml(s) {
 // ── OBJETIVOS ESTRATÉGICOS ──
 const OBJ_KEY = 'zabaleta_objetivos_2026';
 
+// Cache local dos objetivos para evitar múltiplas leituras
+let _objCache = null;
+
 function loadObjetivos() {
+  // Retorna cache local (já carregado assincronamente no init)
+  return _objCache || {};
+}
+
+async function loadObjetivosAsync() {
+  if (!window._fbLoad) return {};
   try {
-    const s = localStorage.getItem(OBJ_KEY);
-    return s ? JSON.parse(s) : {};
+    const s = await window._fbLoad(OBJ_KEY);
+    if (s) {
+      _objCache = typeof s === 'string' ? JSON.parse(s) : s;
+    } else {
+      _objCache = {};
+    }
+    return _objCache;
   } catch(e) { return {}; }
 }
 
 function saveObjetivos(obj) {
-  try { localStorage.setItem(OBJ_KEY, JSON.stringify(obj)); } catch(e) {}
+  _objCache = obj;
+  if (window._fbSave) window._fbSave(OBJ_KEY, obj);
 }
 
-function initObjetivos() {
-  const obj = loadObjetivos();
-  ['o1','o2','o3','o4','o5'].forEach(id => {
-    if (obj[id]) {
-      const pct = obj[id].progresso || 0;
-      const status = obj[id].status || '';
-      const fill = document.getElementById('pf-' + id);
-      const range = document.getElementById('pr-' + id);
-      const pctEl = document.getElementById('pp-' + id);
-      const sel = document.querySelector(`[data-id="${id}"] .obj-goal-status`);
-      if (fill) fill.style.width = pct + '%';
-      if (range) range.value = pct;
-      if (pctEl) pctEl.textContent = pct + '%';
-      if (sel && status) sel.value = status;
-    }
-  });
+async function initObjetivos() {
+  const doInit = async () => {
+    const obj = await loadObjetivosAsync();
+    ['o1','o2','o3','o4','o5'].forEach(id => {
+      if (obj[id]) {
+        const pct = obj[id].progresso || 0;
+        const status = obj[id].status || '';
+        const fill = document.getElementById('pf-' + id);
+        const range = document.getElementById('pr-' + id);
+        const pctEl = document.getElementById('pp-' + id);
+        const sel = document.querySelector(`[data-id="${id}"] .obj-goal-status`);
+        if (fill) fill.style.width = pct + '%';
+        if (range) range.value = pct;
+        if (pctEl) pctEl.textContent = pct + '%';
+        if (sel && status) sel.value = status;
+      }
+    });
+  };
+  if (window._firebaseReady) {
+    doInit();
+  } else {
+    window.addEventListener('firebase-ready', doInit, { once: true });
+  }
 }
 
 function updateObjProg(id, val) {
