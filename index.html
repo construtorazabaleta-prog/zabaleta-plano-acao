@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBYqHf8bHbD8ElREv3TmvhPcCI3xZAuxiM",
@@ -21,22 +21,38 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Expõe funções Firebase globalmente para o script principal
-  window._fbLoad = async function(key) {
-    try {
-      const snap = await getDoc(doc(db, 'plano_acao_2026', key));
-      return snap.exists() ? snap.data().value : null;
-    } catch(e) { console.error('Firebase load error:', e); return null; }
-  };
-
+  // Salva no Firestore
   window._fbSave = async function(key, value) {
     try {
       await setDoc(doc(db, 'plano_acao_2026', key), { value });
     } catch(e) { console.error('Firebase save error:', e); }
   };
 
-  window._firebaseReady = true;
-  window.dispatchEvent(new Event('firebase-ready'));
+  // Listener em tempo real para atividades
+  let _isLocalChange = false;
+  window._fbSetLocalChange = function(v) { _isLocalChange = v; };
+
+  onSnapshot(doc(db, 'plano_acao_2026', 'zabaleta_plano_2026'), (snap) => {
+    if (_isLocalChange) return; // ignora atualizações causadas pelo próprio usuário
+    const value = snap.exists() ? snap.data().value : null;
+    if (value && window._onRemoteDataUpdate) {
+      window._onRemoteDataUpdate('zabaleta_plano_2026', value);
+    } else if (!value && window._firebaseReady) {
+      window.dispatchEvent(new CustomEvent('firebase-first-load', { detail: { key: 'zabaleta_plano_2026', value: null } }));
+    }
+    if (!window._firebaseReady) {
+      window._firebaseReady = true;
+      window.dispatchEvent(new CustomEvent('firebase-first-load', { detail: { key: 'zabaleta_plano_2026', value } }));
+    }
+  });
+
+  // Listener em tempo real para objetivos
+  onSnapshot(doc(db, 'plano_acao_2026', 'zabaleta_objetivos_2026'), (snap) => {
+    const value = snap.exists() ? snap.data().value : null;
+    if (value && window._onRemoteObjUpdate) {
+      window._onRemoteObjUpdate(value);
+    }
+  });
 </script>
 <style>
   :root {
@@ -1881,38 +1897,44 @@ function applyMigrations() {
   return migrated;
 }
 
+function applyRemoteData(value) {
+  try {
+    data = typeof value === 'string' ? JSON.parse(value) : value;
+    const migrated = applyMigrations();
+    if (migrated) save();
+    populateSelects();
+    renderRespPills();
+    applyFilters();
+    renderStats();
+    renderDash();
+  } catch(e) {}
+}
+
+// Callback chamado pelo listener do Firebase quando outro usuário faz mudança
+window._onRemoteDataUpdate = function(key, value) {
+  if (key === STORAGE_KEY) applyRemoteData(value);
+};
+
 function load() {
-  // Inicia com dados RAW; carrega do Firebase de forma assíncrona
+  // Inicia com RAW enquanto aguarda Firebase
   data = JSON.parse(JSON.stringify(RAW));
   applyMigrations();
 
-  const doLoad = async () => {
-    if (!window._fbLoad) return;
-    const s = await window._fbLoad(STORAGE_KEY);
-    if (s) {
-      try {
-        data = typeof s === 'string' ? JSON.parse(s) : s;
-        const migrated = applyMigrations();
-        if (migrated) save();
-        populateSelects();
-        renderRespPills();
-        applyFilters();
-        renderStats();
-        renderDash();
-      } catch(e) {}
+  const handleFirstLoad = (e) => {
+    const value = e.detail && e.detail.value;
+    if (value) {
+      applyRemoteData(value);
     }
   };
 
-  if (window._firebaseReady) {
-    doLoad();
-  } else {
-    window.addEventListener('firebase-ready', doLoad, { once: true });
-  }
+  window.addEventListener('firebase-first-load', handleFirstLoad, { once: true });
 }
 
 function save() {
   if (window._fbSave) {
+    window._fbSetLocalChange && window._fbSetLocalChange(true);
     window._fbSave(STORAGE_KEY, data);
+    setTimeout(() => window._fbSetLocalChange && window._fbSetLocalChange(false), 2000);
   }
 }
 
@@ -3182,22 +3204,35 @@ const OBJ_KEY = 'zabaleta_objetivos_2026';
 let _objCache = null;
 
 function loadObjetivos() {
-  // Retorna cache local (já carregado assincronamente no init)
   return _objCache || {};
 }
 
 async function loadObjetivosAsync() {
-  if (!window._fbLoad) return {};
-  try {
-    const s = await window._fbLoad(OBJ_KEY);
-    if (s) {
-      _objCache = typeof s === 'string' ? JSON.parse(s) : s;
-    } else {
-      _objCache = {};
-    }
-    return _objCache;
-  } catch(e) { return {}; }
+  // Aguarda o cache ser preenchido pelo listener (já configurado no Firebase script)
+  return _objCache || {};
 }
+
+// Callback chamado pelo listener do Firebase quando objetivos mudam remotamente
+window._onRemoteObjUpdate = function(value) {
+  try {
+    _objCache = typeof value === 'string' ? JSON.parse(value) : value;
+    // Re-aplica os objetivos na tela
+    ['o1','o2','o3','o4','o5'].forEach(id => {
+      if (_objCache[id]) {
+        const pct = _objCache[id].progresso || 0;
+        const status = _objCache[id].status || '';
+        const fill = document.getElementById('pf-' + id);
+        const range = document.getElementById('pr-' + id);
+        const pctEl = document.getElementById('pp-' + id);
+        const sel = document.querySelector(`[data-id="${id}"] .obj-goal-status`);
+        if (fill) fill.style.width = pct + '%';
+        if (range) range.value = pct;
+        if (pctEl) pctEl.textContent = pct + '%';
+        if (sel && status) sel.value = status;
+      }
+    });
+  } catch(e) {}
+};
 
 function saveObjetivos(obj) {
   _objCache = obj;
